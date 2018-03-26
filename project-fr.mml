@@ -2097,8 +2097,8 @@ Layer:
             feature,
             access,
             CONCAT(
-                COALESCE("name:fr", name),
-                CASE WHEN ("name:fr" IS NOT NULL OR name IS NOT NULL) AND elevation IS NOT NULL THEN E'\n' ELSE NULL END,
+                name,
+                CASE WHEN name IS NOT NULL AND elevation IS NOT NULL THEN E'\n' ELSE NULL END,
                 CASE WHEN elevation IS NOT NULL THEN CONCAT(REPLACE(ROUND(elevation)::TEXT, '-', U&'\2212'), U&'\00A0', 'm') ELSE NULL END
             ) AS name,
             CASE
