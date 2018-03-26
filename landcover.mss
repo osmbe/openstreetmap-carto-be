@@ -55,6 +55,9 @@
 @military: #f55;
 @beach: #fff1ba;
 
+// -- Flowers --
+@roses: #ffb2bf;
+
 // --- Sports ---
 
 @pitch: #aae0cb; // also track
@@ -267,6 +270,13 @@
     }
   }
 
+  [feature = 'landuse_flower_bed' ],
+  [feature = 'landcover_flower_bed' ] {
+    [zoom >= 18]{
+      polygon-fill: @roses;
+    }
+  }
+
   [feature = 'leisure_dog_park'] {
     [zoom >= 10] {
       polygon-fill: @leisure;
@@ -303,6 +313,7 @@
   }
 
   [feature = 'landuse_forest'],
+  [feature = 'landcover_trees'],
   [feature = 'natural_wood'] {
     [zoom >= 8] {
       polygon-fill: @forest;
@@ -340,6 +351,7 @@
   [feature = 'natural_grassland'][zoom >= 8],
   [feature = 'landuse_meadow'][zoom >= 8],
   [feature = 'landuse_grass'][zoom >= 10],
+  [feature = 'landcover_grass'][zoom >= 10],
   [feature = 'landuse_village_green'][zoom >= 10],
   [feature = 'leisure_common'][zoom >= 10] {
     polygon-fill: @grass;
@@ -476,7 +488,8 @@
     }
   }
 
-  [feature = 'natural_sand'][zoom >= 8] {
+  [feature = 'natural_sand'][zoom >= 8],
+  [feature = 'landcover_sand'][zoom >= 8] {
     polygon-fill: @sand;
     [way_pixels >= 4]  { polygon-gamma: 0.75; }
     [way_pixels >= 64] { polygon-gamma: 0.3;  }
@@ -488,7 +501,8 @@
     [way_pixels >= 64] { polygon-gamma: 0.3;  }
   }
 
-  [feature = 'natural_scrub'][zoom >= 10] {
+  [feature = 'natural_scrub'][zoom >= 10],
+  [feature = 'landcover_bushes'][zoom >= 10] {
     polygon-fill: @scrub;
     [way_pixels >= 4]  { polygon-gamma: 0.75; }
     [way_pixels >= 64] { polygon-gamma: 0.3;  }
