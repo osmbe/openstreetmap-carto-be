@@ -78,7 +78,7 @@ Layer:
       type: shape
     properties:
       minzoom: 1
-      maxzoom: 3
+      maxzoom: 7
   - id: landcover-low-zoom
     geometry: polygon
     <<: *extents
