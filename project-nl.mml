@@ -88,13 +88,13 @@ Layer:
         (SELECT
             way, name, way_pixels, religion,
             COALESCE(wetland, landuse, "natural") AS feature
-          OM (SELECT
+          FROM (SELECT
               way, COALESCE("name:nl", name, '') AS name, religion,
               ('landuse_' || (CASE WHEN landuse IN ('forest', 'military', 'farmland', 'residential', 'commercial', 'retail', 'industrial', 'meadow') THEN landuse ELSE NULL END)) AS landuse,
               ('natural_' || (CASE WHEN "natural" IN ('wood', 'sand', 'scree', 'shingle', 'bare_rock', 'heath', 'grassland') THEN "natural" ELSE NULL END)) AS "natural",
               ('wetland_' || (CASE WHEN "natural" IN ('wetland', 'mud') THEN (CASE WHEN "natural" IN ('mud') THEN "natural" ELSE tags->'wetland' END) ELSE NULL END)) AS wetland,
               way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-            OM planet_osm_polygon
+            FROM planet_osm_polygon
             WHERE (landuse IN ('forest', 'military', 'farmland', 'residential', 'commercial', 'retail', 'industrial', 'meadow')
               OR "natural" IN ('wood', 'wetland', 'mud', 'sand', 'scree', 'shingle', 'bare_rock', 'heath', 'grassland'))
               AND way_area > 0.01*!pixel_width!::real*!pixel_height!::real
@@ -114,7 +114,7 @@ Layer:
         (SELECT
             way, name, religion, way_pixels,
             COALESCE(aeroway, amenity, wetland, power, landuse, leisure, man_made, military, "natural", tourism, highway, railway) AS feature
-          OM (SELECT
+          FROM (SELECT
               way, COALESCE("name:nl",name, '') AS name,
               ('aeroway_' || (CASE WHEN aeroway IN ('apron', 'aerodrome') THEN aeroway ELSE NULL END)) AS aeroway,
               ('amenity_' || (CASE WHEN amenity IN ('parking', 'bicycle_parking', 'motorcycle_parking', 'university', 'college', 'school',
@@ -138,7 +138,7 @@ Layer:
               ('railway_' || (CASE WHEN railway = 'station' THEN railway ELSE NULL END)) AS railway,
               CASE WHEN religion IN ('christian', 'jewish', 'muslim') THEN religion ELSE 'INT-generic'::text END AS religion,
               way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-            OM planet_osm_polygon
+            FROM planet_osm_polygon
             WHERE (landuse IS NOT NULL
               OR leisure IS NOT NULL
               OR aeroway IN ('apron', 'aerodrome')
@@ -166,7 +166,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE man_made = 'cutline'
         ) AS landcover_line
     properties:
@@ -184,7 +184,7 @@ Layer:
               OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
               THEN 'yes' ELSE 'no' END AS int_intermittent,
             CASE WHEN tunnel IN ('yes', 'culvert') THEN 'yes' ELSE 'no' END AS int_tunnel
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE waterway IN ('stream', 'drain', 'ditch')
         ) AS water_lines_casing
     properties:
@@ -201,7 +201,7 @@ Layer:
             CASE WHEN tags->'intermittent' IN ('yes')
               OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
               THEN 'yes' ELSE 'no' END AS int_intermittent
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE waterway = 'river'
         ) AS water_lines_low_zoom
     properties:
@@ -231,7 +231,7 @@ Layer:
             CASE WHEN tags->'intermittent' IN ('yes')
               OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
               THEN 'yes' ELSE 'no' END AS int_intermittent
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE
             (waterway IN ('dock', 'riverbank')
               OR landuse IN ('reservoir', 'basin')
@@ -262,7 +262,7 @@ Layer:
                 END
               END AS int_wetland,
             tags->'leaf_type' AS leaf_type
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE ("natural" IN ('marsh', 'mud', 'wetland', 'wood', 'beach', 'shoal', 'reef', 'scrub', 'sand') OR landuse = 'forest')
             AND building IS NULL
             AND way_area > 0.01*!pixel_width!::real*!pixel_height!::real
@@ -294,7 +294,7 @@ Layer:
               THEN 'yes' ELSE 'no' END AS int_intermittent,
             CASE WHEN tunnel IN ('yes', 'culvert') THEN 'yes' ELSE 'no' END AS int_tunnel,
             'no' AS bridge
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE waterway IN ('river', 'canal', 'derelict_canal', 'stream', 'drain', 'ditch', 'wadi')
             AND (bridge IS NULL OR bridge NOT IN ('yes', 'aqueduct'))
           ORDER BY COALESCE(layer,0)
@@ -311,7 +311,7 @@ Layer:
             way,
             waterway,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE waterway IN ('dam', 'weir', 'lock_gate')
         ) AS water_barriers_line
     properties:
@@ -326,7 +326,7 @@ Layer:
             way,
             waterway,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE waterway IN ('dam', 'weir', 'lock_gate')
         ) AS water_barriers_poly
     properties:
@@ -339,7 +339,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE leisure = 'marina'
         ) AS marinas_area
     properties:
@@ -352,7 +352,7 @@ Layer:
       table: |-
         (SELECT
             way, man_made
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE man_made IN ('pier', 'breakwater', 'groyne')
         ) AS piers_poly
     properties:
@@ -365,7 +365,7 @@ Layer:
       table: |-
         (SELECT
             way, man_made
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE man_made IN ('pier', 'breakwater', 'groyne')
         ) AS piers_line
     properties:
@@ -378,7 +378,7 @@ Layer:
       table: |-
         (SELECT
             way, waterway
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE waterway IN ('dam', 'weir', 'lock_gate')
         ) AS water_barriers_points
     properties:
@@ -394,7 +394,7 @@ Layer:
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels,
             man_made,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE man_made = 'bridge'
         ) AS bridge
     properties:
@@ -408,7 +408,7 @@ Layer:
         (SELECT
             way,
             building
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE building IS NOT NULL
             AND building != 'no'
             AND (aeroway IS NULL OR aeroway != 'terminal')
@@ -434,7 +434,7 @@ Layer:
             aeroway,
             aerialway,
             tags->'public_transport' as public_transport
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE building IS NOT NULL
             AND building != 'no'
             AND (aeroway = 'terminal'
@@ -469,7 +469,7 @@ Layer:
             service,
             link,
             layernotnull
-          OM ( -- subselect that contains both roads and rail
+          FROM ( -- subselect that contains both roads and rail
             SELECT
                 way,
                 'highway_' || highway AS feature, --only motorway to tertiary links are accepted later on
@@ -498,7 +498,7 @@ Layer:
                 END AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE (tunnel = 'yes' OR tunnel = 'building_passage' OR covered = 'yes')
                 AND highway IS NOT NULL -- end of road select
             UNION ALL
@@ -523,7 +523,7 @@ Layer:
                 'no' AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE (tunnel = 'yes' OR tunnel = 'building_passage' OR covered = 'yes')
                 AND railway IS NOT NULL -- end of rail select
             ) AS features
@@ -548,7 +548,7 @@ Layer:
             way,
             landuse,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE landuse = 'military'
             AND building IS NULL
         ) AS landuse_overlay
@@ -565,7 +565,7 @@ Layer:
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels,
             COALESCE("name:nl", name) AS name,
             tourism
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE tourism = 'theme_park'
             OR tourism = 'zoo'
         ) AS tourism_boundary
@@ -580,11 +580,11 @@ Layer:
       table: |-
         (SELECT
             way, COALESCE(historic, barrier) AS feature
-          OM (SELECT way,
+          FROM (SELECT way,
             ('barrier_' || (CASE WHEN barrier IN ('chain', 'city_wall', 'embankment', 'ditch', 'fence', 'guard_rail',
                   'handrail', 'hedge', 'kerb', 'retaining_wall', 'wall') THEN barrier ELSE NULL END)) AS barrier,
             ('historic_' || (CASE WHEN historic = 'citywalls' THEN historic ELSE NULL END)) AS historic
-            OM planet_osm_line
+            FROM planet_osm_line
             WHERE barrier IN ('chain', 'city_wall', 'embankment', 'ditch', 'fence', 'guard_rail',
                   'handrail', 'hedge', 'kerb', 'retaining_wall', 'wall')
               OR historic = 'citywalls'
@@ -601,7 +601,7 @@ Layer:
       table: |-
         (SELECT
             way, "natural", man_made
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE "natural" = 'cliff' OR man_made = 'embankment'
         ) AS cliffs
     properties:
@@ -615,9 +615,9 @@ Layer:
       table: |-
         (SELECT
             way, barrier AS feature
-          OM (SELECT way,
+          FROM (SELECT way,
             ('barrier_' || barrier) AS barrier
-            OM planet_osm_polygon
+            FROM planet_osm_polygon
             WHERE barrier IS NOT NULL
           ) AS features
         ) AS area_barriers
@@ -631,7 +631,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE route = 'ferry'
         ) AS ferry_routes
     properties:
@@ -648,7 +648,7 @@ Layer:
               THEN 'INT-minor'::text
               ELSE 'INT-normal'::text
             END AS int_tc_service
-          OM planet_osm_point p
+          FROM planet_osm_point p
             JOIN planet_osm_line l ON ST_DWithin(p.way, l.way, 0.1) -- Assumes Mercator
             JOIN (VALUES
               ('tertiary', 1),
@@ -676,7 +676,7 @@ Layer:
               'highway_' || (CASE WHEN highway IN ('residential', 'unclassified', 'pedestrian', 'service', 'footway', 'cycleway', 'track', 'path', 'platform') THEN highway ELSE NULL END)),
               ('railway_' || (CASE WHEN railway IN ('platform') THEN railway ELSE NULL END))
             ) AS feature
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE highway IN ('residential', 'unclassified', 'pedestrian', 'service', 'footway', 'track', 'path', 'platform')
             OR railway IN ('platform')
           ORDER BY COALESCE(layer,0), way_area DESC
@@ -702,7 +702,7 @@ Layer:
             service,
             link,
             layernotnull
-          OM ( -- subselect that contains both roads and rail/aero
+          FROM ( -- subselect that contains both roads and rail/aero
             SELECT
                 way,
                 ('highway_' || highway) AS feature, --only motorway to tertiary links are accepted later on
@@ -731,7 +731,7 @@ Layer:
                 END AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE (tunnel IS NULL OR NOT tunnel IN ('yes', 'building_passage'))
                 AND (covered IS NULL OR NOT covered = 'yes')
                 AND (bridge IS NULL OR NOT bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct'))
@@ -758,7 +758,7 @@ Layer:
                 'no' AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE (tunnel IS NULL OR NOT tunnel IN ('yes', 'building_passage'))
                 AND (covered IS NULL OR NOT covered = 'yes')
                 AND (bridge IS NULL OR NOT bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct'))
@@ -788,7 +788,7 @@ Layer:
               ('railway_' || (CASE WHEN railway IN ('platform') THEN railway ELSE NULL END)),
               (('aeroway_' || CASE WHEN aeroway IN ('runway', 'taxiway', 'helipad') THEN aeroway ELSE NULL END))
             ) AS feature
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE highway IN ('residential', 'unclassified', 'pedestrian', 'service', 'footway', 'living_street', 'track', 'path', 'platform', 'services')
             OR railway IN ('platform')
             OR aeroway IN ('runway', 'taxiway', 'helipad')
@@ -820,7 +820,7 @@ Layer:
             service,
             link,
             layernotnull
-          OM ( -- begin "features" subselect that contains both roads and rail/aero
+          FROM ( -- begin "features" subselect that contains both roads and rail/aero
             SELECT
                 way,
                 'highway_' || highway AS feature, -- only motorway to tertiary links are accepted later on
@@ -849,7 +849,7 @@ Layer:
                 END AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE (tunnel IS NULL OR NOT tunnel IN ('yes', 'building_passage'))
                 AND (covered IS NULL OR NOT covered = 'yes')
                 AND (bridge IS NULL OR NOT bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct'))
@@ -877,7 +877,7 @@ Layer:
                 'no' AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE (tunnel IS NULL OR NOT tunnel IN ('yes', 'building_passage'))
                 AND (covered IS NULL OR NOT covered = 'yes')
                 AND (bridge IS NULL OR NOT bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct'))
@@ -904,7 +904,7 @@ Layer:
             p.way AS way, l.highway AS int_tc_type,
             CASE WHEN l.service IN ('parking_aisle', 'drive-through', 'driveway') THEN 'INT-minor'::text
               ELSE 'INT-normal'::text END AS int_tc_service
-          OM planet_osm_point p
+          FROM planet_osm_point p
             JOIN planet_osm_line l
               ON ST_DWithin(p.way, l.way, 0.1)
             JOIN (VALUES
@@ -931,7 +931,7 @@ Layer:
             way,
             aerialway,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE aerialway IS NOT NULL
         ) AS aerialways
     properties:
@@ -957,7 +957,7 @@ Layer:
                                   'concrete:plates', 'paving_stones', 'metal', 'wood') THEN 'paved'
               ELSE NULL
             END AS int_surface
-          OM planet_osm_roads
+          FROM planet_osm_roads
           WHERE highway IS NOT NULL
             OR (railway IS NOT NULL AND railway != 'preserved'
               AND (service IS NULL OR service NOT IN ('spur', 'siding', 'yard')))
@@ -983,7 +983,7 @@ Layer:
               THEN 'yes' ELSE 'no' END AS int_intermittent,
             CASE WHEN tunnel IN ('yes', 'culvert') THEN 'yes' ELSE 'no' END AS int_tunnel,
             'yes' AS bridge
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE waterway IN ('river', 'canal', 'derelict_canal', 'stream', 'drain', 'ditch', 'wadi')
             AND bridge IN ('yes', 'aqueduct')
           ORDER BY COALESCE(layer,0)
@@ -1010,7 +1010,7 @@ Layer:
             service,
             link,
             layernotnull
-          OM ( -- subselect that contains both roads and rail/aero
+          FROM ( -- subselect that contains both roads and rail/aero
             SELECT
                 way,
                 'highway_' || highway AS feature, --only motorway to tertiary links are accepted later on
@@ -1039,7 +1039,7 @@ Layer:
                 END AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct')
                 AND highway IS NOT NULL -- end of road select
             UNION ALL
@@ -1064,7 +1064,7 @@ Layer:
                 'no' AS link,
                 COALESCE(layer,0) AS layernotnull,
                 z_order
-              OM planet_osm_line
+              FROM planet_osm_line
               WHERE bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct')
                 AND railway IS NOT NULL -- end of rail select
             ) AS features
@@ -1087,7 +1087,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE highway = 'bus_guideway'
         ) AS guideways
     properties:
@@ -1102,7 +1102,7 @@ Layer:
             way,
             tags->'entrance' AS entrance,
             access
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE (tags->'entrance') IS NOT NULL AND
             (tags->'indoor' = 'no'
             OR (tags->'indoor') IS NULL))
@@ -1119,7 +1119,7 @@ Layer:
             way,
             aeroway,
             bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct') AS bridge
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE aeroway IN ('runway', 'taxiway')
           ORDER BY bridge NULLS FIRST,
             CASE WHEN aeroway = 'runway' THEN 10 ELSE 0 END
@@ -1135,7 +1135,7 @@ Layer:
         (SELECT
             way,
             admin_level
-          OM planet_osm_roads
+          FROM planet_osm_roads
           WHERE boundary = 'administrative'
             AND admin_level IN ('0', '1', '2', '3', '4')
             AND osm_id < 0
@@ -1153,7 +1153,7 @@ Layer:
         (SELECT
             way,
             admin_level
-          OM planet_osm_roads
+          FROM planet_osm_roads
           WHERE boundary = 'administrative'
             AND admin_level IN ('0', '1', '2', '3', '4', '5', '6', '7', '8')
             AND osm_id < 0
@@ -1171,7 +1171,7 @@ Layer:
         (SELECT
             way,
             admin_level
-          OM planet_osm_roads
+          FROM planet_osm_roads
           WHERE boundary = 'administrative'
             AND admin_level IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
             AND osm_id < 0
@@ -1187,7 +1187,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE power = 'minor_line'
         ) AS power_minorline
     properties:
@@ -1200,7 +1200,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE power = 'line'
         ) AS power_line
     properties:
@@ -1216,7 +1216,7 @@ Layer:
             COALESCE("name:nl", name) AS name,
             boundary,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE (boundary = 'national_park' OR leisure = 'nature_reserve')
             AND building IS NULL
             AND way_area > 0.01*!pixel_width!::real*!pixel_height!::real
@@ -1231,12 +1231,12 @@ Layer:
       table: |-
         (SELECT
             way, "natural"
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE "natural" = 'tree'
         UNION ALL
         SELECT
             way, "natural"
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE "natural" = 'tree_row'
         ) AS trees
     properties:
@@ -1252,7 +1252,7 @@ Layer:
             way,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE boundary = 'administrative'
             AND admin_level = '2'
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
@@ -1274,7 +1274,7 @@ Layer:
               WHEN (tags->'population' ~ '^[0-9]{1,8}$') THEN (tags->'population')::INTEGER ELSE 0
             END as population,
             round(ascii(md5(osm_id::text)) / 55) AS dir -- base direction factor on geometry to be consistent across metatiles
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE place IN ('city', 'town', 'village', 'hamlet')
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
             AND tags @> 'capital=>yes'
@@ -1295,7 +1295,7 @@ Layer:
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels,
             COALESCE("name:nl", name) AS name,
             ref
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE boundary = 'administrative'
             AND admin_level = '4'
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
@@ -1319,7 +1319,7 @@ Layer:
               ELSE 2
             END as category,
             round(ascii(md5(osm_id::text)) / 55) AS dir -- base direction factor on geometry to be consistent across metatiles
-          OM
+          FROM
             (SELECT
                 osm_id,
                 way,
@@ -1338,7 +1338,7 @@ Layer:
                     ELSE 1
                   END)
                 ) AS score
-              OM planet_osm_point
+              FROM planet_osm_point
               WHERE place IN ('city', 'town')
                 AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
                 AND NOT (tags @> 'capital=>yes')
@@ -1358,7 +1358,7 @@ Layer:
             way,
             place,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE place IN ('village', 'hamlet')
              AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
              AND NOT tags @> 'capital=>yes'
@@ -1395,7 +1395,7 @@ Layer:
               ELSE 2
             END
               AS prio
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE railway IN ('station', 'halt', 'tram_stop', 'subway_entrance')
             OR aerialway = 'station'
           ORDER BY prio
@@ -1415,7 +1415,7 @@ Layer:
             ref,
             railway,
             aerialway
-        OM planet_osm_polygon
+        FROM planet_osm_polygon
         WHERE railway IN ('station', 'halt', 'tram_stop')
           OR aerialway = 'station'
         ) AS stations_poly
@@ -1484,7 +1484,7 @@ Layer:
                                'copyshop', 'sports', 'deli', 'tobacco', 'art', 'tea', 'coffee', 'tyres', 'pastry', 'chocolate', 'music', 'medical_supply', 'dairy') THEN shop
                                ELSE 'other' END AS shop,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           -- The upcoming where clause is needed for performance only, as the CASE statements would end up doing the equivalent filtering
           WHERE aeroway IN ('helipad', 'aerodrome')
             OR tourism IN ('artwork', 'alpine_hut', 'camp_site', 'caravan_site', 'chalet', 'wilderness_hut', 'guest_house', 'apartment', 'hostel',
@@ -1517,7 +1517,7 @@ Layer:
            'highway_' || CASE WHEN tags @> 'ford=>yes' OR tags @> 'ford=>stepping_stones' THEN 'ford' ELSE NULL END,
            'leisure_' || CASE WHEN leisure IN ('slipway') THEN leisure ELSE NULL END
             ) AS feature
-          OM planet_osm_line
+          FROM planet_osm_line
           -- The upcoming where clause is needed for performance only, as the CASE statements would end up doing the equivalent filtering
           WHERE tags @> 'ford=>yes' OR tags @> 'ford=>stepping_stones'
             OR leisure IN ('slipway')
@@ -1600,7 +1600,7 @@ Layer:
                                'copyshop', 'sports', 'deli', 'tobacco', 'art', 'tea', 'coffee', 'tyres', 'pastry', 'chocolate', 'music', 'medical_supply', 'dairy') THEN shop
                                ELSE 'other' END AS shop,
             NULL AS way_pixels
-          OM planet_osm_point
+          FROM planet_osm_point
           -- The upcoming where clause is needed for performance only, as the CASE statements would end up doing the equivalent filtering
           WHERE aeroway IN ('helipad', 'aerodrome')
             OR tourism IN ('artwork', 'alpine_hut', 'camp_site', 'caravan_site', 'chalet', 'wilderness_hut', 'guest_house', 'apartment', 'hostel',
@@ -1632,7 +1632,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE power = 'tower'
         ) AS power_towers
     properties:
@@ -1645,7 +1645,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE power = 'pole'
         ) AS power_poles
     properties:
@@ -1662,21 +1662,21 @@ Layer:
             height,
             width,
             refs
-          OM (
+          FROM (
             SELECT
                 way,
                 osm_id,
                 highway,
                 array_length(refs,1) AS height,
-                (SELECT MAX(char_length(ref)) OM unnest(refs) AS u(ref)) AS width,
+                (SELECT MAX(char_length(ref)) FROM unnest(refs) AS u(ref)) AS width,
                 array_to_string(refs, E'\n') AS refs
-              OM (
+              FROM (
                 SELECT
                     way,
                     osm_id,
                     highway,
                     string_to_array(ref, ';') AS refs
-                OM planet_osm_roads
+                FROM planet_osm_roads
                   WHERE highway IN ('motorway', 'trunk', 'primary', 'secondary')
                   AND ref IS NOT NULL
               ) AS p) AS q
@@ -1715,7 +1715,7 @@ Layer:
             ref,
             COALESCE("name:nl", name) AS name,
             NULL AS way_pixels
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE highway = 'motorway_junction' OR highway = 'traffic_signals' OR junction = 'yes'
         UNION ALL
           SELECT
@@ -1725,7 +1725,7 @@ Layer:
             ref,
             COALESCE("name:nl", name) AS name,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE junction = 'yes'
           ORDER BY way_pixels DESC NULLS LAST
         ) AS junctions
@@ -1742,7 +1742,7 @@ Layer:
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels,
             man_made,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE man_made = 'bridge'
           ORDER BY way_area DESC
         ) AS bridge_text
@@ -1760,15 +1760,15 @@ Layer:
             height,
             width,
             refs
-          OM (
+          FROM (
             SELECT
                 osm_id,
                 way,
                 highway,
                 array_length(refs,1) AS height,
-                (SELECT MAX(char_length(ref)) OM unnest(refs) AS u(ref)) AS width,
+                (SELECT MAX(char_length(ref)) FROM unnest(refs) AS u(ref)) AS width,
                 array_to_string(refs, E'\n') AS refs
-              OM (
+              FROM (
                 SELECT
                     osm_id,
                     way,
@@ -1777,7 +1777,7 @@ Layer:
                       CASE WHEN aeroway IN ('runway', 'taxiway') THEN aeroway ELSE NULL END
                     ) AS highway,
                     string_to_array(ref, ';') AS refs
-                  OM planet_osm_line
+                  FROM planet_osm_line
                   WHERE (highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential') OR aeroway IN ('runway', 'taxiway'))
                     AND ref IS NOT NULL
               ) AS p) AS q
@@ -1815,7 +1815,7 @@ Layer:
             place,
             leisure,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE highway IN ('residential', 'unclassified', 'pedestrian', 'service', 'footway', 'cycleway', 'living_street', 'track', 'path', 'platform')
             OR railway IN ('platform')
             OR (place IN ('square')
@@ -1844,7 +1844,7 @@ Layer:
               ELSE NULL
             END AS oneway,
             horse, bicycle
-          OM planet_osm_line l
+          FROM planet_osm_line l
           JOIN (VALUES -- this join is also putting a condition on what is selected. features not matching it do not make it into the results.
               ('motorway', 380),
               ('trunk', 370),
@@ -1890,7 +1890,7 @@ Layer:
             way,
             highway,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE highway IN ('bridleway', 'footway', 'cycleway', 'path', 'track', 'steps')
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
         ) AS paths_text_name
@@ -1912,7 +1912,7 @@ Layer:
             tags->'usage' as usage,
             construction,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_line l
+          FROM planet_osm_line l
           WHERE railway IN ('rail', 'subway', 'narrow_gauge', 'light_rail', 'preserved', 'funicular',
                             'monorail', 'miniature', 'tram', 'disused', 'construction')
             AND (tunnel IS NULL OR NOT tunnel IN ('yes', 'building_passage'))
@@ -1946,7 +1946,7 @@ Layer:
             ) AS feature,
             COALESCE("name:nl", name) AS name,
             CASE WHEN building = 'no' OR building IS NULL THEN 'no' ELSE 'yes' END AS is_building -- always no with the where conditions
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE (landuse IN ('forest', 'military', 'farmland')
               OR "natural" IN ('wood', 'glacier', 'sand', 'scree', 'shingle', 'bare_rock', 'water')
               OR "place" IN ('island')
@@ -2031,7 +2031,7 @@ Layer:
             ref,
             way_area,
             CASE WHEN building = 'no' OR building IS NULL THEN 'no' ELSE 'yes' END AS is_building
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           -- The upcoming where clause is needed for performance only, as the CASE statements would end up doing the equivalent filtering
           WHERE (aeroway IN ('gate', 'apron', 'helipad', 'aerodrome')
               OR tourism IN ('artwork', 'alpine_hut', 'hotel', 'motel', 'hostel', 'chalet', 'wilderness_hut', 'guest_house', 'apartment', 'camp_site', 'caravan_site', 'theme_park',
@@ -2074,7 +2074,7 @@ Layer:
             ref,
             NULL AS way_area,
             CASE WHEN building = 'no' OR building IS NULL THEN 'no' ELSE 'yes' END AS is_building
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE (man_made IN ('pier', 'breakwater', 'groyne', 'embankment')
               OR waterway IN ('dam', 'weir')
               OR "natural" IN ('cliff'))
@@ -2112,7 +2112,7 @@ Layer:
             ref,
             way_area,
             is_building
-          OM
+          FROM
             (SELECT
                 way,
                 NULL AS way_pixels,
@@ -2181,7 +2181,7 @@ Layer:
                 ref,
                 NULL AS way_area,
                 CASE WHEN building = 'no' OR building IS NULL THEN 'no' ELSE 'yes' END AS is_building
-              OM planet_osm_point
+              FROM planet_osm_point
               -- The upcoming where clause is needed for performance only, as the CASE statements would end up doing the equivalent filtering
               WHERE (aeroway IN ('gate', 'apron', 'helipad', 'aerodrome')
                   OR tourism IN ('artwork', 'alpine_hut', 'hotel', 'motel', 'hostel', 'chalet', 'wilderness_hut', 'guest_house', 'apartment', 'camp_site', 'caravan_site', 'theme_park',
@@ -2223,7 +2223,7 @@ Layer:
             COALESCE("name:nl", name) AS name,
             way,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE building IS NOT NULL
             AND building NOT IN ('no')
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
@@ -2239,7 +2239,7 @@ Layer:
       table: |-
         (SELECT
             way
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE "addr:interpolation" IS NOT NULL
         ) AS interpolation
     properties:
@@ -2256,7 +2256,7 @@ Layer:
             "addr:housename" AS addr_housename,
             tags->'addr:unit' AS addr_unit,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE (("addr:housenumber" IS NOT NULL) OR ("addr:housename" IS NOT NULL) OR ((tags->'addr:unit') IS NOT NULL))
             AND building IS NOT NULL
         UNION ALL
@@ -2266,7 +2266,7 @@ Layer:
             "addr:housename" AS addr_housename,
             tags->'addr:unit' AS addr_unit,
             NULL AS way_pixels
-          OM planet_osm_point
+          FROM planet_osm_point
           WHERE ("addr:housenumber" IS NOT NULL) OR ("addr:housename" IS NOT NULL) OR ((tags->'addr:unit') IS NOT NULL)
           ORDER BY way_pixels DESC NULLS LAST
         ) AS addresses
@@ -2287,7 +2287,7 @@ Layer:
               OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
               THEN 'yes' ELSE 'no' END AS int_intermittent,
             CASE WHEN tunnel IN ('yes', 'culvert') THEN 'yes' ELSE 'no' END AS int_tunnel
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE waterway IN ('river', 'canal', 'derelict_canal', 'stream', 'drain', 'ditch', 'wadi')
             AND (tunnel IS NULL or tunnel != 'culvert')
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
@@ -2304,7 +2304,7 @@ Layer:
         (SELECT
             way,
             COALESCE("name:nl", name) AS name
-          OM planet_osm_line
+          FROM planet_osm_line
           WHERE route = 'ferry'
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
         ) AS ferry_routes_text
@@ -2320,7 +2320,7 @@ Layer:
             way,
             COALESCE("name:nl", name) AS name,
             admin_level
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE boundary = 'administrative'
             AND admin_level IN ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
@@ -2338,7 +2338,7 @@ Layer:
             way,
             COALESCE("name:nl", name) AS name,
             way_area/NULLIF(!pixel_width!::real*!pixel_height!::real,0) AS way_pixels
-          OM planet_osm_polygon
+          FROM planet_osm_polygon
           WHERE (boundary = 'national_park' OR leisure = 'nature_reserve')
             AND ("name:nl" IS NOT NULL OR name IS NOT NULL)
         ) AS nature_reserve_text
@@ -2364,7 +2364,7 @@ Layer:
             )  AS feature,
             access,
             CASE WHEN amenity IN ('waste_basket', 'waste_disposal') THEN 2 ELSE 1 END AS prio
-          OM planet_osm_point p
+          FROM planet_osm_point p
           WHERE highway IN ('mini_roundabout')
              OR railway IN ('level_crossing', 'crossing')
              OR amenity IN ('parking', 'bicycle_parking', 'motorcycle_parking', 'bench', 'waste_basket', 'waste_disposal')
@@ -2389,7 +2389,7 @@ Layer:
               'barrier_' || CASE WHEN barrier IN ('bollard', 'gate', 'lift_gate', 'swing_gate', 'block', 'log') THEN barrier ELSE NULL END
             )  AS feature,
             access
-          OM planet_osm_polygon p
+          FROM planet_osm_polygon p
           WHERE amenity IN ('parking', 'bicycle_parking', 'motorcycle_parking')
              OR barrier IN ('bollard', 'gate', 'lift_gate', 'swing_gate', 'block', 'log')
           ) AS amenity_low_priority_poly
