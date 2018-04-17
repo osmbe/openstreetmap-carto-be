@@ -9,6 +9,10 @@ sudo chown $USER /var/run/renderd
 
 renderd -c /usr/local/etc/renderd.conf
 
-sh render-osmbe.sh
-sh render-osmbe-fr.sh
-sh render-osmbe-nl.sh
+if [ $# -eq 0 ]; then
+    sh render-osmbe.sh
+elif [ -f "render-osmbe-$1.sh" ]; then
+    sh "render-osmbe-$1.sh"
+else
+    echo "Version \"$1\" not available !"
+fi
