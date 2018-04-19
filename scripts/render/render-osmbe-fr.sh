@@ -5,6 +5,8 @@ python -c 'import sys, yaml, json; json.dump(yaml.safe_load(sys.stdin), sys.stdo
     > ~/src/openstreetmap-carto-be/project-fr.json.mml && \
 carto ~/src/openstreetmap-carto-be/project-fr.json.mml > ~/src/openstreetmap-carto-be/mapnik-fr.xml
 
+renderd -c /usr/local/etc/renderd.conf
+
 rm -r /var/lib/mod_tile/osmbe-fr/*
 
 render_list -m osmbe-fr -n 8 -z 0 -Z 7 --all
