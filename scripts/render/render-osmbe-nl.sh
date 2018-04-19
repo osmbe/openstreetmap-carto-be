@@ -1,9 +1,9 @@
 #!/bin/sh
 
 python -c 'import sys, yaml, json; json.dump(yaml.safe_load(sys.stdin), sys.stdout, indent=4, separators=(",", ": "))' \
-    < ~/src/openstreetmap-carto-be/project-fr.mml \
-    > ~/src/openstreetmap-carto-be/project-fr.json.mml && \
-carto ~/src/openstreetmap-carto-be/project-fr.json.mml > ~/src/openstreetmap-carto-be/mapnik-fr.xml
+    < ~/src/openstreetmap-carto-be/project-nl.mml \
+    > ~/src/openstreetmap-carto-be/project-nl.json.mml && \
+carto ~/src/openstreetmap-carto-be/project-nl.json.mml > ~/src/openstreetmap-carto-be/mapnik-nl.xml
 
 rm -r /var/lib/mod_tile/osmbe-nl/*
 
