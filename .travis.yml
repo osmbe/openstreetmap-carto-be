@@ -20,6 +20,7 @@ script:
   # Validate the MML against multiple Mapnik versions, and report its lines for debugging purposes
   - for m in $MAPNIK; do ./node_modules/carto/bin/carto -a $m project.mml | xmllint - | wc -l; done
   - for m in $MAPNIK; do ./node_modules/carto/bin/carto -a $m project-fr.mml | xmllint - | wc -l; done
+  - for m in $MAPNIK; do ./node_modules/carto/bin/carto -a $m project-nl.mml | xmllint - | wc -l; done
   # Validate that the SVGs are valid XML
   - find symbols/ -name '*.svg' | xargs xmllint --noout
   # Check the Lua transforms
