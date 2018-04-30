@@ -6,7 +6,7 @@ mkdir -p ~/data && rm -r ~/data/*
 
 sh import-benelux.sh
 sh import-france.sh
-sh import-germany
+sh import-germany.sh
 
 ~/src/osmosis/bin/osmosis --rbf ~/data/france-merged.osm.pbf \
     --rbf ~/data/germany-merged.osm.pbf \
