@@ -594,6 +594,9 @@
     marker-fill: @gastronomy;
     marker-placement: interior;
     marker-clip: false;
+    [cuisine = 'friture'] {
+      marker-file: url('symbols/be/friture.svg');
+    }
   }
 
   [feature = 'amenity_telephone'][zoom >= 17] {
