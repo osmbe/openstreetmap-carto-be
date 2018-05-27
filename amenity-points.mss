@@ -1110,6 +1110,56 @@
     }
   }
 
+  [feature = 'playground_swing'][zoom >= 18] {
+    marker-file: url('symbols/playground/swing.svg');
+    marker-fill: @leisure-green;
+    marker-placement: interior;
+    marker-clip: false;
+    [access != ''][access != 'permissive'][access != 'yes'] {
+      marker-opacity: 0.33;
+    }
+  }
+
+  [feature = 'playground_springy'][zoom >= 18] {
+    marker-file: url('symbols/playground/springy.svg');
+    marker-fill: @leisure-green;
+    marker-placement: interior;
+    marker-clip: false;
+    [access != ''][access != 'permissive'][access != 'yes'] {
+      marker-opacity: 0.33;
+    }
+  }
+
+  [feature = 'playground_slide'][zoom >= 18] {
+    marker-file: url('symbols/playground/slide.svg');
+    marker-fill: @leisure-green;
+    marker-placement: interior;
+    marker-clip: false;
+    [access != ''][access != 'permissive'][access != 'yes'] {
+      marker-opacity: 0.33;
+    }
+  }
+
+  [feature = 'playground_sandpit'][zoom >= 18] {
+    marker-file: url('symbols/playground/sandpit.svg');
+    marker-fill: @leisure-green;
+    marker-placement: interior;
+    marker-clip: false;
+    [access != ''][access != 'permissive'][access != 'yes'] {
+      marker-opacity: 0.33;
+    }
+  }
+
+  [feature = 'playground_climbing_frame'][zoom >= 18] {
+    marker-file: url('symbols/playground/climbing_frame.svg');
+    marker-fill: @leisure-green;
+    marker-placement: interior;
+    marker-clip: false;
+    [access != ''][access != 'permissive'][access != 'yes'] {
+      marker-opacity: 0.33;
+    }
+  }
+
   [feature = 'leisure_miniature_golf'][zoom >= 17] {
     marker-file: url('symbols/miniature_golf.svg');
     marker-fill: @leisure-green;

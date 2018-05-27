@@ -36,6 +36,10 @@
 @railway-line: @industrial-line;
 @rest_area: #efc8c8; // also services
 
+// --- Flowers ---
+
+@roses: #ffb2bf;
+
 // --- Other ----
 
 @allotments: #eecfb3;       // Lch(85,19,70)
@@ -267,6 +271,15 @@
       polygon-fill: @park;
       [way_pixels >= 4]  { polygon-gamma: 0.75; }
       [way_pixels >= 64] { polygon-gamma: 0.3;  }
+    }
+  }
+
+  [feature = 'landuse_flower_bed'],
+  [feature = 'landuse_flower'],
+  [feature = 'landuse_flowers']
+  {
+    [zoom >= 18]{
+      polygon-fill: @roses;
     }
   }
 
