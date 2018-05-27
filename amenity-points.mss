@@ -47,6 +47,9 @@
     [feature = 'tourism_alpine_hut'] {
       marker-file: url('symbols/alpinehut.svg');
     }
+    [feature = 'amenity_shelter'] {
+      marker-fill: @amenity-brown;
+    }
     marker-fill: @accommodation-icon;
     marker-placement: interior;
     marker-clip: false;
@@ -125,8 +128,8 @@
   }
 
   [feature = 'highway_traffic_signals'][zoom >= 17] {
-    marker-file: url('symbols/traffic_light.16.svg');
-    marker-fill: #0a0a0a;
+    marker-file: url('symbols/traffic_light.13.svg');
+    marker-fill: #545454;
     marker-placement: interior;
     marker-clip: false;
   }
@@ -313,11 +316,17 @@
     marker-clip: false;
   }
 
-  [feature = 'tourism_information'][zoom >= 17] {
-    marker-file: url('symbols/information.12.svg');
-    marker-placement: interior;
-    marker-fill: @amenity-brown;
-    marker-clip: false;
+  [feature = 'tourism_information'] {
+    [information != 'guidepost'][zoom >= 17],
+    [information = 'guidepost'][zoom >= 19] {
+      marker-file: url('symbols/information.12.svg');
+      [information = 'guidepost'] {
+        marker-file: url('symbols/guidepost.svg');
+      }
+      marker-placement: interior;
+      marker-fill: @amenity-brown;
+      marker-clip: false;
+    }
   }
 
   [feature = 'amenity_embassy'][zoom >= 17] {
@@ -428,6 +437,13 @@
         }
       }
     }
+  }
+
+  [feature = 'historic_city_gate'][zoom >= 17] {
+    marker-file: url('symbols/city_gate.svg');
+    marker-fill: @man-made-icon;
+    marker-placement: interior;
+    marker-clip: false;
   }
 
   [feature = 'tourism_museum'][zoom >= 16] {
@@ -649,6 +665,31 @@
     marker-fill: @public-service;
     marker-placement: interior;
     marker-clip: false;
+  }
+
+  [feature = 'amenity_nursing_home'],
+  [feature = 'amenity_childcare'] {
+    [zoom >= 17] {
+      marker-width: 4;
+      [zoom >= 18] {
+        marker-width: 6;
+      }
+      marker-line-width: 0;
+      marker-placement: interior;
+      marker-clip: false;
+      marker-fill: darken(@societal_amenities, 70%);
+    }
+  }
+
+  [feature = 'amenity_driving_school'][zoom >= 17] {
+    marker-width: 4;
+    [zoom >= 18] {
+      marker-width: 6;
+    }
+    marker-line-width: 0;
+    marker-placement: interior;
+    marker-clip: false;
+    marker-fill: @shop-icon;
   }
 
   [feature = 'tourism_viewpoint'][zoom >= 16] {
@@ -1204,12 +1245,6 @@
     marker-clip: false;
   }
 
-  [feature = 'natural_spring'][zoom >= 14] {
-    marker-file: url('symbols/spring.svg');
-    marker-placement: interior;
-    marker-clip: false;
-  }
-
   [feature = 'power_generator']['generator:source' = 'wind'],
   [feature = 'power_generator'][power_source = 'wind'] {
     [zoom >= 15] {
@@ -1291,15 +1326,15 @@
   }
 
   [feature = 'barrier_gate']::barrier {
-    [zoom >= 16] {
+    [zoom >= 17] {
       marker-file: url('symbols/gate.svg');
       marker-placement: interior;
       marker-clip: false;
     }
   }
 
-  [feature = 'barrier_lift_gate'][zoom >= 16]::barrier,
-  [feature = 'barrier_swing_gate'][zoom >= 16]::barrier {
+  [feature = 'barrier_lift_gate'][zoom >= 17]::barrier,
+  [feature = 'barrier_swing_gate'][zoom >= 17]::barrier {
     marker-file: url('symbols/liftgate.svg');
     marker-fill: #3f3f3f;
     marker-placement: interior;
@@ -1309,7 +1344,7 @@
   [feature = 'barrier_bollard'],
   [feature = 'barrier_block'],
   [feature = 'barrier_log'] {
-    [zoom >= 16] {
+    [zoom >= 17] {
       marker-width: 3;
       marker-line-width: 0;
       marker-fill: #7d7c7c;
@@ -1584,6 +1619,19 @@
     text-placement: interior;
   }
 
+  [feature = 'tourism_information'][information = 'guidepost'][zoom >= 19] {
+    text-name: "[name]";
+    text-size: @standard-font-size;
+    text-wrap-width: @standard-wrap-width;
+    text-line-spacing: @standard-line-spacing-size;
+    text-fill: darken(@landform-color, 30%);
+    text-face-name: @standard-font;
+    text-halo-radius: @standard-halo-radius;
+    text-halo-fill: @standard-halo-fill;
+    text-placement: interior;
+    text-dy: 11;
+  }
+
   [feature = 'waterway_waterfall'] {
     [zoom >= 13][height > 20],
     [zoom >= 14][height > 10],
@@ -1605,6 +1653,7 @@
   [feature = 'man_made_cross'][zoom >= 17],
   [feature = 'historic_wayside_cross'][zoom >= 17],
   [feature = 'historic_wayside_shrine'][zoom >= 17],
+  [feature = 'historic_city_gate'][zoom >= 17],
   [feature = 'natural_cave_entrance'][zoom >= 15],
   [feature = 'man_made_mast'][zoom >= 18],
   [feature = 'man_made_tower'][zoom >= 17],
@@ -1622,6 +1671,7 @@
     [feature = 'historic_wayside_cross'] {
       text-dy: 6;
     }
+    [feature = 'historic_city_gate'] { text-dy: 10; }
     [feature = 'man_made_mast'] { text-dy: 10; }
     [feature = 'man_made_tower'] { text-dy: 10; }
     text-face-name: @standard-font;
@@ -1855,7 +1905,6 @@
   [feature = 'landuse_grass'],
   [feature = 'landuse_allotments'],
   [feature = 'landuse_farmyard'],
-  [feature = 'landuse_farm'],
   [feature = 'landuse_farmland'],
   [feature = 'landuse_greenhouse_horticulture'],
   [feature = 'shop_mall'],
@@ -2104,6 +2153,9 @@
     [feature = 'tourism_caravan_site'] {
       text-dy: 15;
     }
+    [feature = 'amenity_shelter'] {
+      text-fill: @amenity-brown;
+    }
   }
 
   [feature = 'amenity_taxi'][zoom >= 17] {
@@ -2251,6 +2303,68 @@
       text-halo-radius: @standard-halo-radius;
       text-halo-fill: @standard-halo-fill;
       text-wrap-width: @standard-wrap-width;
+      text-placement: interior;
+    }
+  }
+
+  [feature = 'amenity_nursing_home'],
+  [feature = 'amenity_childcare'] {
+    [zoom >= 18] {
+      text-name: "[name]";
+      text-size: @landcover-font-size;
+      text-wrap-width: @landcover-wrap-width-size;
+      text-line-spacing: @landcover-line-spacing-size;
+      text-face-name: @landcover-face-name;
+      text-halo-radius: @standard-halo-radius;
+      text-halo-fill: @standard-halo-fill;
+      text-placement: interior;
+      text-dy: 8;
+      text-fill: darken(@societal_amenities, 70%);
+    }
+  }
+
+  [feature = 'amenity_driving_school'] {
+    [zoom >= 18] {
+      text-name: "[name]";
+      text-size: @standard-font-size;
+      text-wrap-width: @standard-wrap-width;
+      text-line-spacing: @standard-line-spacing-size;
+      text-dy: 8;
+      text-fill: @shop-text;
+      text-face-name: @standard-font;
+      text-halo-radius: @standard-halo-radius;
+      text-halo-fill: rgba(255, 255, 255, 0.6);
+      text-placement: interior;
+    }
+  }
+
+  [feature = 'amenity_nursing_home'],
+  [feature = 'amenity_childcare'] {
+    [zoom >= 18] {
+      text-name: "[name]";
+      text-size: @landcover-font-size;
+      text-wrap-width: @landcover-wrap-width-size;
+      text-line-spacing: @landcover-line-spacing-size;
+      text-face-name: @landcover-face-name;
+      text-halo-radius: @standard-halo-radius;
+      text-halo-fill: @standard-halo-fill;
+      text-placement: interior;
+      text-dy: 8;
+      text-fill: darken(@societal_amenities, 70%);
+    }
+  }
+
+  [feature = 'amenity_driving_school'] {
+    [zoom >= 18] {
+      text-name: "[name]";
+      text-size: @standard-font-size;
+      text-wrap-width: @standard-wrap-width;
+      text-line-spacing: @standard-line-spacing-size;
+      text-dy: 8;
+      text-fill: @shop-text;
+      text-face-name: @standard-font;
+      text-halo-radius: @standard-halo-radius;
+      text-halo-fill: rgba(255, 255, 255, 0.6);
       text-placement: interior;
     }
   }

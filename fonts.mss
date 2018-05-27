@@ -11,7 +11,9 @@ By order:
 Where available the UI version of the fonts – which provides tighter vertical
 metrics – is used (except for the base font, where the UI version is deprecated
 since Noto Phase III, and Sinhala where both versions are used for backwards
-compatibility with Ubuntu 16.04). Most of the list is in alphabetical order,
+compatibility with Ubuntu 16.04). We intent to have all scripts of Noto in
+our list except dead (historic) scripts of whom we assume that they are not
+used in “name” tags in OSM. Most of the list is in alphabetical order,
 but there are some exceptions.
 
   - Noto Sans is before all other fonts
@@ -24,6 +26,12 @@ but there are some exceptions.
     two variants SC/TC, it won’t be a uniform rendering anyway. So we default
     to Japanese. However, this choise stays somewhat arbitrary and subjective.
     See also https://github.com/gravitystorm/openstreetmap-carto/issues/2208)
+  - For the Syriac script, there exist Noto Sans Syriac Eastern,
+    Noto Sans Syriac Western Regular and Noto Sans Syriac Estrangela Regular.
+    As for CJK fonts, we have no knowledge about what language the “names” tag
+    contains. We choose Syriac Eastern because it seems to be the most
+    widespreaded script variant (Syriac Western is less common, and Syriac
+    Estrangela mostly of historic interest.)
 
 2. Noto provides various variants of Arabic: Noto Kufi Arabic, Noto Naskh
 Arabic, Noto Nastaliq Urdu and Noto Sans Arabic. Kufi and Urdu styles are not
@@ -104,8 +112,6 @@ A regular style.
                 "Noto Sans Symbols Regular",
                 "Noto Sans Symbols2 Regular",
                 "Noto Sans Syriac Eastern Regular",
-                "Noto Sans Syriac Estrangela Regular",
-                "Noto Sans Syriac Western Regular",
                 "Noto Sans Tagalog Regular",
                 "Noto Sans Tagbanwa Regular",
                 "Noto Sans Tai Le Regular",

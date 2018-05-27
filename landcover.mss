@@ -9,8 +9,9 @@
 
 // --- "Base" landuses ---
 
-@built-up-upper-lowzoom: #c0c0c0;
-@built-up-lower-lowzoom: #aaaaaa;
+@built-up-lowzoom: #aaaaaa;
+@built-up-z11: #c0c0c0;
+@built-up-z12: #d0d0d0;
 @residential: #e0dfdf;      // Lch(89,0,0)
 @residential-line: #b9b9b9; // Lch(75,0,0)
 @retail: #ffd6d1;           // Lch(89,16,30)
@@ -26,7 +27,7 @@
 
 // --- Transport ----
 
-@aerodrome: #e9e7e2;
+@transportation-area: #e9e7e2;
 @apron: #e9d1ff;
 @garages: #dfddce;
 @parking: #eeeeee;
@@ -231,8 +232,9 @@
   }
 
   [feature = 'landuse_residential'][zoom >= 8] {
-    polygon-fill: @built-up-lower-lowzoom;
-    [zoom >= 11] { polygon-fill: @built-up-upper-lowzoom; }
+    polygon-fill: @built-up-lowzoom;
+    [zoom >= 11] { polygon-fill: @built-up-z11; }
+    [zoom >= 12] { polygon-fill: @built-up-z12; }
     [zoom >= 13] { polygon-fill: @residential; }
     [zoom >= 16] {
       line-width: .5;
@@ -351,8 +353,9 @@
   [feature = 'landuse_retail'],
   [feature = 'amenity_marketplace'] {
     [zoom >= 8] {
-      polygon-fill: @built-up-lower-lowzoom;
-      [zoom >= 11] { polygon-fill: @built-up-upper-lowzoom; }
+      polygon-fill: @built-up-lowzoom;
+      [zoom >= 11] { polygon-fill: @built-up-z11; }
+      [zoom >= 12] { polygon-fill: @built-up-z12; }
       [zoom >= 13] { polygon-fill: @retail; }
       [zoom >= 16] {
         line-width: 0.5;
@@ -367,8 +370,9 @@
   }
 
   [feature = 'landuse_industrial'][zoom >= 8] {
-    polygon-fill: @built-up-lower-lowzoom;
-    [zoom >= 11] { polygon-fill: @built-up-upper-lowzoom; }
+    polygon-fill: @built-up-lowzoom;
+    [zoom >= 11] { polygon-fill: @built-up-z11; }
+    [zoom >= 12] { polygon-fill: @built-up-z12; }
     [zoom >= 13] { polygon-fill: @industrial; }
     [zoom >= 16] {
       line-width: .5;
@@ -419,8 +423,9 @@
   }
 
   [feature = 'landuse_commercial'][zoom >= 8] {
-    polygon-fill: @built-up-lower-lowzoom;
-    [zoom >= 11] { polygon-fill: @built-up-upper-lowzoom; }
+    polygon-fill: @built-up-lowzoom;
+    [zoom >= 11] { polygon-fill: @built-up-z11; }
+    [zoom >= 12] { polygon-fill: @built-up-z12; }
     [zoom >= 13] { polygon-fill: @commercial; }
     [zoom >= 16] {
       line-width: 0.5;
@@ -543,9 +548,25 @@
     }
   }
 
+  [feature = 'amenity_fire_station'][zoom >= 8][way_pixels > 900],
+  [feature = 'amenity_police'][zoom >= 8][way_pixels > 900],
+  [feature = 'amenity_fire_station'][zoom >= 13],
+  [feature = 'amenity_police'][zoom >= 13] {
+    polygon-fill: #F3E3DD;
+    line-color: @military; 
+    line-opacity: 0.24;
+    line-width: 1.0; 
+    line-offset: -0.5;
+    [zoom >= 15] {
+      line-width: 2; 
+      line-offset: -1.0;
+    }
+  }
+
   [feature = 'amenity_parking'][zoom >= 10],
   [feature = 'amenity_bicycle_parking'][zoom >= 10],
-  [feature = 'amenity_motorcycle_parking'][zoom >= 10] {
+  [feature = 'amenity_motorcycle_parking'][zoom >= 10],
+  [feature = 'amenity_taxi'][zoom >= 10] {
     polygon-fill: @parking;
     [zoom >= 15] {
       line-width: 0.3;
@@ -567,10 +588,11 @@
   }
 
   [feature = 'aeroway_aerodrome'][zoom >= 10],
-  [feature = 'amenity_ferry_terminal'][zoom >= 15] {
-    polygon-fill: @aerodrome;
+  [feature = 'amenity_ferry_terminal'][zoom >= 15],
+  [feature = 'amenity_bus_station'][zoom >= 15] {
+    polygon-fill: @transportation-area;
     line-width: 0.2;
-    line-color: saturate(darken(@aerodrome, 40%), 20%);
+    line-color: saturate(darken(@transportation-area, 40%), 20%);
     [way_pixels >= 4]  { polygon-gamma: 0.75; }
     [way_pixels >= 64] { polygon-gamma: 0.3;  }
   }
