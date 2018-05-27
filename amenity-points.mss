@@ -2335,6 +2335,37 @@
     }
   }
 
+  [feature = 'amenity_nursing_home'],
+  [feature = 'amenity_childcare'] {
+    [zoom >= 18] {
+      text-name: "[name]";
+      text-size: @landcover-font-size;
+      text-wrap-width: @landcover-wrap-width-size;
+      text-line-spacing: @landcover-line-spacing-size;
+      text-face-name: @landcover-face-name;
+      text-halo-radius: @standard-halo-radius;
+      text-halo-fill: @standard-halo-fill;
+      text-placement: interior;
+      text-dy: 8;
+      text-fill: darken(@societal_amenities, 70%);
+    }
+  }
+
+  [feature = 'amenity_driving_school'] {
+    [zoom >= 18] {
+      text-name: "[name]";
+      text-size: @standard-font-size;
+      text-wrap-width: @standard-wrap-width;
+      text-line-spacing: @standard-line-spacing-size;
+      text-dy: 8;
+      text-fill: @shop-text;
+      text-face-name: @standard-font;
+      text-halo-radius: @standard-halo-radius;
+      text-halo-fill: rgba(255, 255, 255, 0.6);
+      text-placement: interior;
+    }
+  }
+
   [feature = 'shop_art'],
   [feature = 'shop_bag'],
   [feature = 'shop_bakery'],
