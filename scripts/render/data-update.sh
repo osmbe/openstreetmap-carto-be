@@ -36,7 +36,7 @@ echo "${GREEN}Import data in PostgreSQL${RESET}"
 osm2pgsql \
     --cache 5000 --number-processes 2 \
     --slim  --multi-geometry --hstore \
-    --host 127.0.0.1 --database openstreetmap --username openstreetmap
+    --host 127.0.0.1 --database openstreetmap --username openstreetmap \
     --style "openstreetmap-carto-be/openstreetmap-carto.style" \
     --tag-transform-script "openstreetmap-carto-be/openstreetmap-carto.lua" \
     --create "belgium-bbox.osm.pbf"
