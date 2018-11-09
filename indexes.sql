@@ -43,3 +43,12 @@ CREATE INDEX planet_osm_polygon_way_area_z6
 CREATE INDEX planet_osm_point_place
   ON planet_osm_point USING GIST (way)
   WHERE place IS NOT NULL AND name IS NOT NULL;
+
+-- @gplv2 suggestions
+CREATE INDEX idx_planet_osm_line_nobridge ON planet_osm_polygon USING gist (way) WHERE ((man_made <> ALL (ARRAY[''::text, '0'::text, 'no'::text])) OR man_made IS NOT NULL);
+CREATE INDEX idx_pop_mm_null ON planet_osm_polygon USING gist (way) WHERE (man_made IS NOT NULL);
+CREATE INDEX idx_pop_no_bridge ON planet_osm_polygon USING gist (way) WHERE (bridge <> ALL (ARRAY[''::text, '0'::text, 'no'::text]));
+CREATE INDEX idx_pop_hw_null ON planet_osm_polygon USING gist (way) WHERE (highway IS NOT NULL);
+CREATE INDEX idx_pop_no_hw ON planet_osm_polygon USING gist (way) WHERE (highway <> ALL (ARRAY[''::text, '0'::text, 'no'::text]));
+CREATE INDEX idx_pop_no_b ON planet_osm_polygon USING gist (way) WHERE (building <> ALL (ARRAY[''::text, '0'::text, 'no'::text]));
+CREATE INDEX idx_pop_b_null ON planet_osm_polygon USING gist (way) WHERE (building IS NOT NULL);
