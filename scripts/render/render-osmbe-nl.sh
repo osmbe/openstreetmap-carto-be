@@ -16,7 +16,7 @@ carto ~/src/openstreetmap-carto-be/project-nl.mml > ~/src/openstreetmap-carto-be
 
 # Start "renderd"
 echo "${GREEN}Start renderd${RESET}"
-sudo mkdir /var/run/renderd
+sudo mkdir -p /var/run/renderd
 sudo chown $USER /var/run/renderd
 renderd -c /usr/local/etc/renderd.conf
 
