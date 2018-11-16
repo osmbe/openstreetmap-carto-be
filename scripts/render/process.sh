@@ -1,5 +1,9 @@
 #!/bin/sh
 
+DIRECTORY=`dirname $0`
+
+cd $DIRECTORY
+
 # Screen colors using tput
 RED=`tput setaf 1`
 GREEN=`tput setaf 2`
