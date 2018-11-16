@@ -28,7 +28,7 @@ wget https://download.geofabrik.de/europe-latest.osm.pbf
 echo "${GREEN}Create Belgium extract${RESET}"
 osmosis/bin/osmosis \
     --read-pbf "europe-latest.osm.pbf" \
-    --bounding-box top=51.6775 left=2.0112 bottom=49.2299 right=6.9825 \
+    --bounding-box top=51.6 left=2.5 bottom=49.4 right=6.5 \
     --write-pbf file="belgium-bbox.osm.pbf"
 
 # Import data in PostgreSQL
