@@ -1463,8 +1463,6 @@
       [access != ''][access != 'permissive'][access != 'yes'] { marker-opacity: 0.33; }
     }
   }
-
-  []
 }
 
 #amenity-low-priority {
