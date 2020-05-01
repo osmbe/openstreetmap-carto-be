@@ -1505,7 +1505,9 @@ Layer:
                                         AND way_area IS NULL
                                    THEN amenity END,
                 'tourism_' || CASE WHEN tourism IN ('viewpoint', 'attraction') THEN tourism END,
-                'place_' || CASE WHEN place IN ('locality') AND way_area IS NULL THEN place END
+                'place_' || CASE WHEN place IN ('locality') AND way_area IS NULL THEN place END,
+                'industrial_' || CASE WHEN industrial IN ('brewery') THEN industrial END,
+                'craft_' || CASE WHEN craft IN ('brewery') THEN craft END
               ) AS feature,
               access,
               CASE

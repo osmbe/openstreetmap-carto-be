@@ -41,6 +41,13 @@
 @standard-font: @book-fonts;
 
 #amenity-points {
+  [feature = 'craft_brewery'][zoom >= 17],
+  [feature = 'industrial_brewery'][zoom >= 17] {
+    marker-file: url('symbols/amenity/brewery.svg');
+    marker-fill: @amenity-brown;
+    marker-clip: false;
+  }
+
   [feature = 'tourism_alpine_hut'][zoom >= 13],
   [feature = 'tourism_wilderness_hut'][zoom >= 13],
   [feature = 'amenity_shelter'][zoom >= 16] {
