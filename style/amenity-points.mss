@@ -41,6 +41,12 @@
 @standard-font: @book-fonts;
 
 #amenity-points {
+  [feature = 'brewery'][zoom >= 17] {
+    marker-file: url('symbols/amenity/brewery.svg');
+    marker-fill: @amenity-brown;
+    marker-clip: false;
+  }
+
   [feature = 'tourism_alpine_hut'][zoom >= 13],
   [feature = 'tourism_wilderness_hut'][zoom >= 13],
   [feature = 'amenity_shelter'][zoom >= 16] {
@@ -1456,6 +1462,8 @@
       [access != ''][access != 'permissive'][access != 'yes'] { marker-opacity: 0.33; }
     }
   }
+
+  []
 }
 
 #amenity-low-priority {
