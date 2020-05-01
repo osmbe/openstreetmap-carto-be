@@ -104,6 +104,9 @@
     }
     [feature = 'amenity_fast_food'][zoom >= 18] {
       marker-file: url('symbols/amenity/fast_food.svg');
+      [cuisine = 'friture'] {
+        marker-file: url('symbols/amenity/friture.svg');
+      }
     }
     [feature = 'amenity_food_court'][zoom >= 17],
     [feature = 'amenity_restaurant'][zoom >= 18] {

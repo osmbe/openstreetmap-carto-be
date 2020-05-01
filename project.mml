@@ -1548,6 +1548,7 @@ Layer:
               tags->'memorial' as memorial,
               tags->'artwork_type' as artwork_type,
               tags->'vending' as vending,
+              tags->'cuisine' as cuisine,
               CASE WHEN shop IN ('supermarket', 'bag', 'bakery', 'beauty', 'bed', 'bookmaker', 'books', 'butcher', 'carpet', 'clothes', 'computer',
                                 'confectionery', 'fashion', 'convenience', 'department_store', 'doityourself', 'hardware', 'fabric', 'fishmonger', 'florist',
                                 'garden_centre', 'hairdresser', 'hifi', 'car', 'car_repair', 'bicycle', 'mall', 'pet',
