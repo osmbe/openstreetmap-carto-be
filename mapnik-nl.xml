@@ -37837,6 +37837,16 @@ UNION ALL
       <Filter><![CDATA[([feature] = 'amenity_atm')]]></Filter>
       <MarkersSymbolizer clip="false" file="symbols/amenity/atm.svg" fill="#734a08" />
     </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <Filter><![CDATA[([feature] = 'craft_brewery')]]></Filter>
+      <MarkersSymbolizer clip="false" file="symbols/amenity/brewery.svg" fill="#734a08" />
+    </Rule>
+    <Rule>
+      <MaxScaleDenominator>5000</MaxScaleDenominator>
+      <Filter><![CDATA[([feature] = 'industrial_brewery')]]></Filter>
+      <MarkersSymbolizer clip="false" file="symbols/amenity/brewery.svg" fill="#734a08" />
+    </Rule>
   </Style>
   <Layer cache-features="true" maximum-scale-denominator="750000" name="amenity-points" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
     <StyleName><![CDATA[amenity-points]]></StyleName>
@@ -37927,7 +37937,9 @@ UNION ALL
                                 AND way_area IS NULL
                            THEN amenity END,
         'tourism_' || CASE WHEN tourism IN ('viewpoint', 'attraction') THEN tourism END,
-        'place_' || CASE WHEN place IN ('locality') AND way_area IS NULL THEN place END
+        'place_' || CASE WHEN place IN ('locality') AND way_area IS NULL THEN place END,
+        'industrial_' || CASE WHEN industrial IN ('brewery') THEN industrial END,
+        'craft_' || CASE WHEN craft IN ('brewery') THEN craft END
       ) AS feature,
       access,
       CASE
@@ -45410,7 +45422,9 @@ ORDER BY
                                 AND way_area IS NULL
                            THEN amenity END,
         'tourism_' || CASE WHEN tourism IN ('viewpoint', 'attraction') THEN tourism END,
-        'place_' || CASE WHEN place IN ('locality') AND way_area IS NULL THEN place END
+        'place_' || CASE WHEN place IN ('locality') AND way_area IS NULL THEN place END,
+        'industrial_' || CASE WHEN industrial IN ('brewery') THEN industrial END,
+        'craft_' || CASE WHEN craft IN ('brewery') THEN craft END
       ) AS feature,
       access,
       CASE
