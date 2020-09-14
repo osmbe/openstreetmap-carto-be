@@ -1432,7 +1432,7 @@ Layer:
           (SELECT -- This subselect allows filtering on the feature column
               way,
               CONCAT(
-                COALESCE("name:fr", name),
+                name,
                 E'\n' || CONCAT( -- by doing this with a || if both the ele and height branches are null, this entire expression is null and only name is used
                   CASE
                     WHEN (tags ? 'ele') AND tags->'ele' ~ '^-?\d{1,4}(\.\d+)?$'
@@ -1577,8 +1577,10 @@ Layer:
                   barrier,
                   boundary,
                   building,
+                  craft,
                   highway,
                   historic,
+                  industrial,
                   landuse,
                   leisure,
                   man_made,
@@ -1606,8 +1608,10 @@ Layer:
                   barrier,
                   boundary,
                   building,
+                  craft,
                   highway,
                   historic,
+                  industrial,
                   landuse,
                   leisure,
                   man_made,

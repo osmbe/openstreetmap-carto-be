@@ -37864,7 +37864,7 @@ UNION ALL
   (SELECT -- This subselect allows filtering on the feature column
       way,
       CONCAT(
-        COALESCE("name:nl", name),
+        name,
         E'\n' || CONCAT( -- by doing this with a || if both the ele and height branches are null, this entire expression is null and only name is used
           CASE
             WHEN (tags ? 'ele') AND tags->'ele' ~ '^-?\d{1,4}(\.\d+)?$'
@@ -38009,8 +38009,10 @@ UNION ALL
           barrier,
           boundary,
           building,
+          craft,
           highway,
           historic,
+          industrial,
           landuse,
           leisure,
           man_made,
@@ -38038,8 +38040,10 @@ UNION ALL
           barrier,
           boundary,
           building,
+          craft,
           highway,
           historic,
+          industrial,
           landuse,
           leisure,
           man_made,
@@ -45349,7 +45353,7 @@ ORDER BY
   (SELECT -- This subselect allows filtering on the feature column
       way,
       CONCAT(
-        COALESCE("name:nl", name),
+        name,
         E'\n' || CONCAT( -- by doing this with a || if both the ele and height branches are null, this entire expression is null and only name is used
           CASE
             WHEN (tags ? 'ele') AND tags->'ele' ~ '^-?\d{1,4}(\.\d+)?$'
@@ -45494,8 +45498,10 @@ ORDER BY
           barrier,
           boundary,
           building,
+          craft,
           highway,
           historic,
+          industrial,
           landuse,
           leisure,
           man_made,
@@ -45523,8 +45529,10 @@ ORDER BY
           barrier,
           boundary,
           building,
+          craft,
           highway,
           historic,
+          industrial,
           landuse,
           leisure,
           man_made,
