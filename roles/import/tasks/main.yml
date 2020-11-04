@@ -19,8 +19,11 @@
 - name: Install dependencies
   include_tasks: dependencies.yml
 
-- name: Initialize PostgreSQL
+- name: Setup PostgreSQL
   include_tasks: postgresql.yml
+
+- name: Setup Apache
+  include_tasks: apache.yml
 
 - name: Run process
   include_tasks: process.yml

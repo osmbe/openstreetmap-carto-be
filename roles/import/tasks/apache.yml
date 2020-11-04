@@ -1,0 +1,15 @@
+- template:
+    src: mod_tile.load
+    dest: /etc/apache2/mods-available/mod_tile.load
+
+- apache2_module:
+    state: present
+    name: mod_tile
+
+- shell: cp /tmp/source/mod_tile/examples/config/apache2/renderd.conf.dist /etc/apache2/conf-available/renderd.conf
+
+- shell: a2enconf renderd
+
+- template:
+    src: tile.html
+    dest: /var/www/html/tile.html
