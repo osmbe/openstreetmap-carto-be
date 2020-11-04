@@ -1,0 +1,13 @@
+- apt:
+    state: present
+    name:
+      - npm
+      - nodejs
+
+- npm:
+    name: carto
+    global: yes
+
+- shell: carto -v
+  register: carto
+  failed_when: carto.stdout is version('1.0', '<')

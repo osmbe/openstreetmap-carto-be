@@ -1,0 +1,19 @@
+- systemd:
+    name: renderd
+    state: started
+
+- file:
+    path: "{{ tile_dir }}"
+    state: directory
+    mode: 0775
+    owner: gis
+    group: gis
+
+- name: "Generate tiles (levels: 0-7) : World"
+  shell: "render_list -m {{ style }} -t {{ tile_dir }} -n 8 -z 0 -Z 7 --all"
+
+- name: "Generate tiles list"
+  shell: /tmp/make_render_list.py > /tmp/tiles.lst
+
+- name: "Generate tiles (levels: 7-18)"
+  shell: "cat /tmp/tiles.lst | render_list -m {{ style }} -t {{ tile_dir }} -n 8 -z 8 -Z 18 --all"

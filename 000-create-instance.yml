@@ -1,0 +1,33 @@
+---
+- name: Create an instance
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Launch an instance
+      os_server:
+        name: "{{ instance_name }}"
+        state: present
+        cloud: "{{ cloud_name }}"  # See `~/.config/openstack/clouds.yaml`
+        region_name: "{{ region_name }}"
+        key_name: "{{ key_name }}"
+        flavor: "{{ flavor_name }}"
+        image: "{{ image_name }}"
+        # wait for the instance to be ready
+        wait: true
+      register: openstack
+
+    - name: Add instance to inventory
+      add_host:
+        hostname: "{{ openstack.server.name }}"
+        ansible_host: "{{ openstack.server.public_v4 }}"
+        ansible_user: debian
+        ansible_python_interpreter: "/usr/bin/python3"
+        ansible_become: true
+        # do not check host key
+        ansible_ssh_extra_args: "-o StrictHostKeyChecking=no"
+
+    - name: Wait for SSH to be active
+      wait_for:
+        host: "{{ openstack.server.public_v4 }}"
+        port: 22
+        delay: 5

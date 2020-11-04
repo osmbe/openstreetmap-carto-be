@@ -1,0 +1,25 @@
+- git:
+    repo: git://github.com/openstreetmap/mod_tile.git
+    dest: /tmp/source/mod_tile
+
+- shell: |
+    ./autogen.sh
+    ./configure
+  args:
+    chdir: /tmp/source/mod_tile
+
+- make:
+    chdir: /tmp/source/mod_tile
+
+- make:
+    chdir: /tmp/source/mod_tile
+    target: install
+  become: yes
+
+- make:
+    chdir: /tmp/source/mod_tile
+    target: install-mod_tile
+  become: yes
+
+- shell: ldconfig
+  become: yes

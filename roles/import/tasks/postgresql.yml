@@ -1,0 +1,35 @@
+- postgresql_user:
+    name: gis
+    # password: gis
+  become: yes
+  become_user: postgres
+
+- postgresql_db:
+    name: gis
+    owner: gis
+  become: yes
+  become_user: postgres
+
+- postgresql_ext:
+    name: postgis
+    db: gis
+  become: yes
+  become_user: postgres
+
+- postgresql_ext:
+    name: hstore
+    db: gis
+  become: yes
+  become_user: postgres
+
+- postgresql_pg_hba:
+    dest: /etc/postgresql/13/main/pg_hba.conf
+    contype: local
+    users: gis
+    databases: gis
+    method: peer
+    create: true
+
+- systemd:
+    name: postgresql
+    state: restarted

@@ -1,0 +1,9 @@
+- template:
+    src: make_render_list.py
+    dest: /tmp/make_render_list.py
+    mode: 0744
+
+- pip:
+    name:
+      - mercantile
+      - shapely

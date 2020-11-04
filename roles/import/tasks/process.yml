@@ -1,0 +1,19 @@
+- name: Download OpenStretMap Carto
+  include_tasks: process/openstreetmap-carto.yml
+
+- name: Download and extract data
+  include_tasks: process/extract.yml
+
+- name: Import data in database
+  include_tasks: process/import.yml
+
+- name: Download shapefiles
+  shell: /tmp/style/openstreetmap-carto/scripts/get-shapefiles.py
+
+# - name: Generate mapnik.xml
+#   shell: |
+#     carto /tmp/style/openstreetmap-carto/project.mml > /tmp/style/openstreetmap-carto/mapnik.xml
+#     carto /tmp/style/openstreetmap-carto/project-fr.mml > /tmp/style/openstreetmap-carto/mapnik-fr.xml
+#     carto /tmp/style/openstreetmap-carto/project-nl.mml > /tmp/style/openstreetmap-carto/mapnik-nl.xml
+
+- include_tasks: process/render.yml

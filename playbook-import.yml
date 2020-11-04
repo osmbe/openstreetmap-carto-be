@@ -1,0 +1,37 @@
+---
+
+- name: Create an instance on OpenStack
+  import_playbook: 000-create-instance.yml
+  vars:
+    instance_name: osm-import
+    # the key in your `clouds.yaml` file
+    cloud_name: ovh
+    # the key name
+    # create or list with `openstack keypair`
+    key_name: dev_geo6_be
+    # the flavor name
+    # list with `openstack flavor list`
+    flavor_name: "s1-8"
+    # the image name
+    # list with `openstack image list`
+    image_name: "Debian 10"
+    # the region name
+    region_name: "GRA3"
+
+- hosts:
+    - osm-import
+  roles:
+    - role: import
+      vars:
+        # poly_url: http://polygons.openstreetmap.fr/get_poly.py?id=52411&params=0.150000-0.005000-0.005000 # Belgium
+        # geojson_url: http://polygons.openstreetmap.fr/get_geojson.py?id=52411&params=0.150000-0.005000-0.005000 # Belgium
+        poly_url: http://polygons.openstreetmap.fr/get_poly.py?id=58258&params=0 # Jette
+        geojson_url: http://polygons.openstreetmap.fr/get_geojson.py?id=58258&params=0 # Jette
+        tile_dir: /var/lib/mod_tile
+        style: osmbe
+
+# - name: Delete instance
+#   import_playbook: 999-delete-instance.yml
+#   vars:
+#     instance_name: osm-import
+#     cloud_name: ovh

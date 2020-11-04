@@ -1,0 +1,26 @@
+- name: Create group gis
+  group:
+    name: gis
+    state: present
+
+- name: Create user gis
+  user:
+    name: gis
+    state: present
+    group: gis
+    shell: "/bin/bash"
+
+- name: Update apt cache + Upgrade
+  apt:
+    update_cache: yes
+    upgrade: yes
+    cache_valid_time: 3600
+
+- name: Install dependencies
+  include_tasks: dependencies.yml
+
+- name: Initialize PostgreSQL
+  include_tasks: postgresql.yml
+
+- name: Run process
+  include_tasks: process.yml

@@ -1,0 +1,36 @@
+- apt:
+    state: present
+    name:
+      # Build tools
+      - build-essential
+      - git
+      - cmake
+      - autoconf
+      - protobuf-c-compiler
+      # Mapnik
+      - libmapnik-dev
+      - mapnik-utils
+      - python-mapnik
+      - libmapnik-dev
+      - mapnik-utils
+      - python-mapnik
+      # GDAL
+      - gdal-bin
+      # Apache
+      - apache2
+      # Python
+      - python3-pip
+      # Fonts
+      - fonts-noto-cjk
+      - fonts-noto-hinted
+      - fonts-noto-unhinted
+      - ttf-unifont
+      # Libraries
+      - libprotobuf-c-dev
+      - zlib1g-dev
+      - libexpat1-dev
+      - libbz2-dev
+      - libproj-dev
+      - liblua5.3-dev
+      - libboost-all-dev
+      - apache2-dev

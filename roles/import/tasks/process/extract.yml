@@ -1,0 +1,18 @@
+- name: Download Europe extract
+  get_url:
+    url: https://download.geofabrik.de/europe/belgium-latest.osm.pbf
+    dest: /tmp/belgium-latest.osm.pbf
+    timeout: 600
+
+- name: Get poly file for Belgium
+  get_url:
+    url: "{{ poly_url }}"
+    dest: /tmp/belgium.poly
+
+- name: Create Belgium extract
+  shell: |
+    osmium extract \
+      --strategy smart \
+      --polygon=/tmp/belgium.poly \
+      --output=/tmp/belgium-latest-extract.osm.pbf \
+      /tmp/belgium-latest.osm.pbf

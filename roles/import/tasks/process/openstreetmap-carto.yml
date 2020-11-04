@@ -1,0 +1,13 @@
+- name: Download OpenStreetMap-Carto
+  git:
+    repo: git://github.com/gravitystorm/openstreetmap-carto.git
+    version: v5.1.0
+    dest: /tmp/style/openstreetmap-carto
+
+- name: Download OpenStreetMap-Carto Belgium
+  git:
+    repo: git://github.com/jbelien/openstreetmap-carto-be.git
+    version: "5.1"
+    dest: /tmp/style/openstreetmap-carto-be
+
+- shell: cp -R /tmp/style/openstreetmap-carto-be/* /tmp/style/openstreetmap-carto/

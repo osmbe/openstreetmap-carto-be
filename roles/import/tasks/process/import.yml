@@ -1,0 +1,22 @@
+- shell: |
+    osm2pgsql \
+      --cache 5000 --number-processes 2 \
+      --slim --multi-geometry --hstore \
+      --database gis --username gis \
+      --style "/tmp/style/openstreetmap-carto/openstreetmap-carto.style" \
+      --tag-transform-script "/tmp/style/openstreetmap-carto/openstreetmap-carto.lua" \
+      --create \
+      "/tmp/belgium-latest-extract.osm.pbf"
+  become_user: gis
+
+- postgresql_query:
+    db: gis
+    login_user: gis
+    path_to_script: /tmp/style/openstreetmap-carto/indexes.sql
+  become_user: gis
+
+# - postgresql_query:
+#     db: gis
+#     login_user: gis
+#     query: "ANALYZE; REINDEX DATABASE \"openstreetmap\";"
+#   become_user: gis

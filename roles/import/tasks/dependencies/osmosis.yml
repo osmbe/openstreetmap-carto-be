@@ -1,0 +1,13 @@
+- file:
+    path: /tmp/source/osmosis
+    state: directory
+    mode: "0755"
+
+- unarchive:
+    src: "https://github.com/openstreetmap/osmosis/releases/download/{{ osmosis_version }}/osmosis-{{ osmosis_version }}.tgz"
+    dest: /tmp/source/osmosis
+    remote_src: yes
+
+- file:
+    path: /tmp/source/osmosis/bin/osmosis
+    mode: a+x

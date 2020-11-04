@@ -1,0 +1,20 @@
+- git:
+    repo: git://github.com/openstreetmap/osm2pgsql.git
+    dest: /tmp/source/osm2pgsql
+
+- file:
+    path: /tmp/source/osm2pgsql/build
+    state: directory
+    mode: 0775
+
+- shell: cmake ..
+  args:
+    chdir: /tmp/source/osm2pgsql/build
+
+- make:
+    chdir: /tmp/source/osm2pgsql/build
+
+- make:
+    chdir: /tmp/source/osm2pgsql/build
+    target: install
+  become: yes
