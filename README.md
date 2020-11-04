@@ -29,19 +29,40 @@ ansible-playbook playbook-import.yml
 
 ## Documentation
 
-### Key list
+### Configuration OpenStack (OVH)
+
+File: `~/.config/openstack/clouds.yaml`  
+Documentation: <https://docs.openstack.org/python-openstackclient/latest/configuration/index.html>
+
+```yaml
+---
+clouds:
+  ovh:
+    auth:
+      auth_url: https://auth.cloud.ovh.net/v3/
+      user_domain_name: Default
+      project_domain_name: Default
+      tenant_id:
+      tenant_name:
+      username:
+      password:
+```
+
+### Useful commands
+
+#### Key list
 
 ```cmd
 openstack keypair list --os-cloud ovh --os-identity-api-version 3
 ```
 
-### Flavor list
+#### Flavor list
 
 ```cmd
 openstack flavor list --os-cloud ovh --os-identity-api-version 3
 ```
 
-### Image list
+#### Image list
 
 ```cmd
 openstack image list --os-cloud ovh --os-identity-api-version 3
