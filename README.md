@@ -67,3 +67,7 @@ openstack flavor list --os-cloud ovh --os-identity-api-version 3
 ```cmd
 openstack image list --os-cloud ovh --os-identity-api-version 3
 ```
+
+---
+
+*Thanks a lot to [@julienfastre](https://github.com/julienfastre) from [Champs-Libres](https://github.com/Champs-Libres) for all the help.*
