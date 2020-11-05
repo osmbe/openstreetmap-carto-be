@@ -30,7 +30,7 @@
         geojson_url: http://polygons.openstreetmap.fr/get_geojson.py?id=58258&params=0 # Jette
         tile_dir: /var/cache/renderd/tiles
         style: osmbe
-        num_threads: 8
+        num_threads: 2
 
 # - name: Delete instance
 #   import_playbook: 999-delete-instance.yml
