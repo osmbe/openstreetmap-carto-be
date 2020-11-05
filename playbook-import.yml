@@ -25,6 +25,7 @@
       vars:
         # poly_url: http://polygons.openstreetmap.fr/get_poly.py?id=52411&params=0.150000-0.005000-0.005000 # Belgium
         # geojson_url: http://polygons.openstreetmap.fr/get_geojson.py?id=52411&params=0.150000-0.005000-0.005000 # Belgium
+        osm_url: https://download.geofabrik.de/europe/belgium-latest.osm.pbf
         poly_url: http://polygons.openstreetmap.fr/get_poly.py?id=58258&params=0 # Jette
         geojson_url: http://polygons.openstreetmap.fr/get_geojson.py?id=58258&params=0 # Jette
         tile_dir: /var/cache/renderd/tiles

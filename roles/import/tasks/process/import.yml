@@ -6,7 +6,7 @@
       --style "/tmp/style/openstreetmap-carto/openstreetmap-carto.style" \
       --tag-transform-script "/tmp/style/openstreetmap-carto/openstreetmap-carto.lua" \
       --create \
-      "/tmp/belgium-latest-extract.osm.pbf"
+      "/tmp/openstreetmap-latest-extract.osm.pbf"
   become_user: gis
 
 - postgresql_query:
