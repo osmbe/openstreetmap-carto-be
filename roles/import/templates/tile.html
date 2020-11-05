@@ -33,13 +33,19 @@
   <div id="map"></div>
 
   <script>
-    var map = L.map('map').setView([0, 0], 2);
-
     var baselayers = {
-      "OpenStreetMap": L.tileLayer('/osmbe/{z}/{x}/{y}.png', { maxZoom: 18 }),
-      "OpenStreetMap - FR": L.tileLayer('/osmbe-fr/{z}/{x}/{y}.png', { maxZoom: 18 }),
-      "OpenStreetMap - NL": L.tileLayer('/osmbe-nl/{z}/{x}/{y}.png', { maxZoom: 18 }),
+      "osmbe": L.tileLayer("/osmbe/{z}/{x}/{y}.png", { maxZoom: 18 }),
+      "osmbe-fr": L.tileLayer("/osmbe-fr/{z}/{x}/{y}.png", { maxZoom: 18 }),
+      "osmbe-nl": L.tileLayer("/osmbe-nl/{z}/{x}/{y}.png", { maxZoom: 18 }),
     };
+
+    var map = L.map("map", {
+      center: [0, 0],
+      zoom: 2,
+      layers: [
+        baselayers["{{ style }}"]
+      ]
+    });
 
     L.control.layers(baselayers, {}).addTo(map);
   </script>
