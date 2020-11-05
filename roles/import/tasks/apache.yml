@@ -5,11 +5,16 @@
 - apache2_module:
     state: present
     name: mod_tile
+    identifier: tile_module
 
 - shell: cp /tmp/source/mod_tile/examples/config/apache2/renderd.conf.dist /etc/apache2/conf-available/renderd.conf
 
 - shell: a2enconf renderd
 
-- template:
+- systemd:
+    name: apache2
+    state: restarted
+
+- copy:
     src: tile.html
     dest: /var/www/html/tile.html
