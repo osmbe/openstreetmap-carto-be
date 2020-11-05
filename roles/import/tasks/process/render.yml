@@ -1,6 +1,7 @@
-- systemd:
-    name: renderd
-    state: started
+- name: Start renderd
+  shell: renderd --config=/etc/renderd.conf
+  become: yes
+  become_user: gis
 
 - file:
     path: "{{ tile_dir }}"

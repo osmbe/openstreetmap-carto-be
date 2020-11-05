@@ -10,15 +10,15 @@
     src: renderd.conf
     dest: /etc/renderd.conf
 
-- name: Install renderd as a service
-  copy:
-    src: renderd.service
-    dest: /etc/systemd/system/renderd.service
+# - name: Install renderd as a service
+#   copy:
+#     src: renderd.service
+#     dest: /etc/systemd/system/renderd.service
 
-- systemd:
-    daemon_reload: yes
+# - systemd:
+#     daemon_reload: yes
 
-- systemd:
-    name: renderd
-    state: started
-    enabled: yes
+# - systemd:
+#     name: renderd
+#     state: started
+#     enabled: yes
