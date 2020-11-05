@@ -15,6 +15,6 @@
     name: apache2
     state: restarted
 
-- copy:
+- template:
     src: tile.html
     dest: /var/www/html/tile.html
