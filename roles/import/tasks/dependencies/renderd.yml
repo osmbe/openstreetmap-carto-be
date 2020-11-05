@@ -11,7 +11,7 @@
     dest: /etc/renderd.conf
 
 - name: Install renderd as a service
-  template:
+  copy:
     src: renderd.service
     dest: /etc/systemd/system/renderd.service
 

@@ -1,4 +1,4 @@
-- template:
+- copy:
     src: mod_tile.load
     dest: /etc/apache2/mods-available/mod_tile.load
 
