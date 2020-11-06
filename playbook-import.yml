@@ -30,7 +30,13 @@
         geojson_url: http://polygons.openstreetmap.fr/get_geojson.py?id=58258&params=0 # Jette
         tile_dir: /var/cache/renderd/tiles
         style: osmbe
-        num_threads: 2
+
+- name: Sync OSMBE tiles
+  import_playbook: 800-sync-tiles.yml
+  vars:
+    target: tile.openstreetmap.be
+    instance_name: osm-import
+    style: osmbe
 
 # - name: Delete instance
 #   import_playbook: 999-delete-instance.yml

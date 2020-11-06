@@ -1,0 +1,39 @@
+---
+- name: "Sync \"{{ style }}\" tiles from \"{{ instance_name }}\""
+  hosts: "{{ target }}"
+  gather_facts: false
+  tasks:
+    - apt:
+        name: rsync
+        state: present
+      delegate_to: "{{ instance_name }}"
+
+    - name: Generate SSH key
+      shell: ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa
+      delegate_to: "{{ instance_name }}"
+
+    - name: Fetch SSH key
+      shell: cat ~/.ssh/id_rsa.pub
+      register: ssh_key
+      changed_when: false
+      delegate_to: "{{ instance_name }}"
+
+    - name: Add SSH key to target
+      authorized_key:
+        user: "{{ ansible_user }}"
+        state: present
+        key: "{{ ssh_key.stdout }}"
+
+    - name: Copy tiles to target
+      synchronize:
+        src: "{{ tile_dir }}/{{ style }}/"
+        dest: "/mnt/{{ style }}/"
+        mode: push
+        delete: yes
+      delegate_to: "{{ instance_name }}"
+
+    - name: Remove SSH key from target
+      authorized_key:
+        user: "{{ ansible_user }}"
+        state: absent
+        key: "{{ ssh_key.stdout }}"
