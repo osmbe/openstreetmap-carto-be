@@ -18,4 +18,4 @@
   shell: /tmp/make_render_list.py > /tmp/tiles.lst
 
 - name: "Generate tiles (levels: 7-18)"
-  shell: "cat /tmp/tiles.lst | render_list --map={{ style }} --tile-dir {{ tile_dir }} --num-threads={{ num_threads }} --min-zoom=8 --max-zoom=18 --all"
+  shell: "cat /tmp/tiles.lst | render_list --map={{ style }} --tile-dir {{ tile_dir }} --num-threads={{ num_threads }} --min-zoom=8 --max-zoom=18"
