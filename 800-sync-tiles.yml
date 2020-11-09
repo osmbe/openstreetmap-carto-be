@@ -29,7 +29,11 @@
         src: "{{ tile_dir }}/{{ style }}/"
         dest: "/mnt/{{ style }}/"
         mode: push
+        archive: no
         delete: yes
+        perms: yes
+        recursive: yes
+        times: yes
       delegate_to: "{{ instance_name }}"
 
     - name: Remove SSH key from target
