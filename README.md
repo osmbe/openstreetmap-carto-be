@@ -25,11 +25,11 @@ ansible-playbook -vv playbook-import.yml
 
 | Name          | Description                                 | Note                                                  |
 |---------------|---------------------------------------------|-------------------------------------------------------|
-| `osm_url`     |                                             | <https://download.geofabrik.de/> (format: `.osm.pbf`) |
-| `poly_url`    |                                             | <http://polygons.openstreetmap.fr/> (poly)            |
-| `geojson_url` |                                             | <http://polygons.openstreetmap.fr/> (GeoJSON)         |
-| `tile_dir`    |                                             |                                                       |
-| `style`       |                                             | Available values: `osmbe`, `osmbe-fr`, `osmbe-nl`     |
+| `osm_url`     | URL to OpenStreetMap extract                | <https://download.geofabrik.de/> (format: `.osm.pbf`) |
+| `poly_url`    | URL to zone to extract (poly)               | <http://polygons.openstreetmap.fr/> (poly)            |
+| `geojson_url` | URL to zone to extract (GeoJSON)            | <http://polygons.openstreetmap.fr/> (GeoJSON)         |
+| `tile_dir`    | Directory used to store the tiles           |                                                       |
+| `style`       | Carto style name                            | Available values: `osmbe`, `osmbe-fr`, `osmbe-nl`     |
 | `num_threads` | Number of threads available on your server. |                                                       |
 
 ## Documentation
