@@ -1,0 +1,8 @@
+- name: Install dependencies
+  include_tasks: dependencies.yml
+
+- name: Setup Apache
+  include_tasks: apache.yml
+
+- name: Run render process
+  include_tasks: process.yml

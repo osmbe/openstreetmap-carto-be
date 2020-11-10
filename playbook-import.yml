@@ -11,7 +11,7 @@
     key_name: dev_geo6_be
     # the flavor name
     # list with `openstack flavor list`
-    flavor_name: "c2-30"
+    flavor_name: "c2-60"
     # the image name
     # list with `openstack image list`
     image_name: "Debian 10"
@@ -25,10 +25,12 @@
       vars:
         osm_url: https://download.geofabrik.de/europe-latest.osm.pbf
         poly_url: http://polygons.openstreetmap.fr/get_poly.py?id=52411&params=0.150000-0.005000-0.005000 # Belgium
+    - role: render
+      vars:
         geojson_url: http://polygons.openstreetmap.fr/get_geojson.py?id=52411&params=0.150000-0.005000-0.005000 # Belgium
-        tile_dir: /var/cache/renderd/tiles
         style: osmbe
-        num_threads: 8
+        tile_dir: /var/cache/renderd/tiles
+        num_threads: 16
 
 - name: Sync OSMBE tiles
   import_playbook: 800-sync-tiles.yml

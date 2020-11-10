@@ -1,0 +1,10 @@
+# - name: Install CartoCSS
+#   include_tasks: dependencies/cartocss.yml
+
+- name: Install mod_tile/renderd
+  include_tasks: dependencies/mod_tile.yml
+- name: Configure renderd
+  include_tasks: dependencies/renderd.yml
+
+- name: Install make_render_list
+  include_tasks: dependencies/make_render_list.yml

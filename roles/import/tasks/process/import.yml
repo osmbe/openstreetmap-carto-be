@@ -18,5 +18,5 @@
 # - postgresql_query:
 #     db: gis
 #     login_user: gis
-#     query: "ANALYZE; REINDEX DATABASE \"openstreetmap\";"
+#     query: "ANALYZE; REINDEX DATABASE \"gis\";"
 #   become_user: gis
