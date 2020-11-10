@@ -7,7 +7,7 @@ ansible-playbook -vv playbook-import.yml
 ```
 
 1. Create OpenStack instance ([`000-create-instance.yml`](./000-create-instance.yml))
-1. Run process
+1. Run import process
     1. Create user and group "gis"
     1. Update and upgrade packages
     1. Install dependencies ([`dependencies.yml`](./roles/import/tasks/dependencies.yml))
@@ -15,7 +15,7 @@ ansible-playbook -vv playbook-import.yml
     1. Download OpenStreetMapCarto ([`openstreetmap-carto.yml`](./roles/import/tasks/process/openstreetmap-carto.yml))
     1. Download Europe and extract Belgium ([`extract.yml`](./roles/import/tasks/process/extract.yml))
     1. Import data in PostgreSQL ([`import.yml`](./roles/import/tasks/process/import.yml))
-    1. Render tiles ([`render.yml`](./roles/import/tasks/process/render.yml))
+1. Render tiles ([`render.yml`](./roles/import/tasks/process/render.yml))
 1. Copy tiles to `tile.openstreetmap.be` server ([`800-sync-tiles.yml`](./800-sync-tiles.yml))
 1. Delete OpenStack instance ([`999-delete-instance.yml`](./999-delete-instance.yml))
 
