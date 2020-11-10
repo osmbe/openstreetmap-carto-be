@@ -34,6 +34,8 @@
         perms: yes
         recursive: yes
         times: yes
+        rsync_opts:
+          - "--delete-during"
       delegate_to: "{{ instance_name }}"
 
     - name: Remove SSH key from target
