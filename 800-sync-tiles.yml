@@ -30,7 +30,7 @@
         dest: "/mnt/{{ style }}/"
         mode: push
         archive: no
-        delete: yes
+        # delete: yes
         perms: yes
         recursive: yes
         times: yes
