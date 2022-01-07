@@ -1,5 +1,5 @@
 - copy:
-    src: mod_tile.load
+    src: apache-mod_tile.load
     dest: /etc/apache2/mods-available/mod_tile.load
 
 - apache2_module:
@@ -7,7 +7,9 @@
     name: mod_tile
     identifier: tile_module
 
-- shell: cp /tmp/source/mod_tile/examples/config/apache2/renderd.conf.dist /etc/apache2/conf-available/renderd.conf
+- copy:
+    src: apache-renderd.conf
+    dest: /etc/apache2/conf-available/renderd.conf
 
 - shell: a2enconf renderd
 
