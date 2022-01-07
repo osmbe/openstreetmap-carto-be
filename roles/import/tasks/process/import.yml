@@ -1,6 +1,6 @@
 - shell: |
     osm2pgsql \
-      --cache 5000 --number-processes 2 \
+      --cache 5000 --number-processes {{ num_threads }} \
       --slim --multi-geometry --hstore \
       --database gis --username gis \
       --style "/tmp/style/openstreetmap-carto/openstreetmap-carto.style" \
