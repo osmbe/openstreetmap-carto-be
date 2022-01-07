@@ -3,6 +3,7 @@
     repo: git://github.com/gravitystorm/openstreetmap-carto.git
     version: v5.1.0
     dest: /tmp/style/openstreetmap-carto
+    force: yes
 
 - name: Download OpenStreetMap-Carto Belgium
   git:
