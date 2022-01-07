@@ -15,4 +15,5 @@
       --strategy smart \
       --polygon=/tmp/extract.poly \
       --output=/tmp/openstreetmap-latest-extract.osm.pbf \
+      --overwrite \
       /tmp/openstreetmap-latest.osm.pbf
