@@ -1,6 +1,7 @@
 - git:
     repo: git://github.com/openstreetmap/mod_tile.git
     dest: /tmp/source/mod_tile
+    version: "0.5"
 
 - shell: |
     ./autogen.sh
