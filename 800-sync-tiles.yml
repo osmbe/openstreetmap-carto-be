@@ -35,7 +35,7 @@
         recursive: yes
         times: yes
         rsync_opts:
-          - "--delete-during"
+          - "--delete-before"
       delegate_to: "{{ instance_name }}"
 
     - name: Remove SSH key from target
