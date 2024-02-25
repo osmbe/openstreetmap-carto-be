@@ -33,6 +33,9 @@ node,way   lock         text         linear
 node,way   man_made     text         polygon
 node,way   military     text         polygon
 node,way   name         text         linear
+node,way   name:de      text         linear
+node,way   name:fr      text         linear
+node,way   name:nl      text         linear
 node,way   natural      text         polygon
 node,way   oneway       text         linear
 node,way   place        text         polygon
