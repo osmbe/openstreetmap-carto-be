@@ -2095,7 +2095,7 @@ Layer:
               OR leisure IN ('slipway', 'track')
               OR waterway IN ('dam', 'weir')
               OR "natural" IN ('arete', 'cliff', 'ridge'))
-            AND ("name:fr" IS NOT NULL OR name IS NOT NULL)
+            AND ("name:fr" IS NOT NULL OR name IS NOT NULL))
             OR (tags @> 'golf=>hole' AND ref IS NOT NULL)
         ) AS text_line
     properties:
