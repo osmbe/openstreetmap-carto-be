@@ -1,5 +1,5 @@
 # This is the osm2pgsql .style file for openstreetmap-carto.
-# It is inteded to be used with openstreetmap-carto.lua and osm2pgsql Lua
+# It is intended to be used with openstreetmap-carto.lua and osm2pgsql Lua
 # transforms. Full usage details are in INSTALL.md
 # Among things, this means that the linear vs polygon distinction in this file
 # doesn't matter, because that is set in the Lua and this file is only used for
@@ -21,12 +21,10 @@ node,way   boundary     text         linear
 node,way   building     text         polygon
 way        construction text         linear
 way        covered      text         linear
-node,way   craft        text         polygon
 way        foot         text         linear
 node,way   highway      text         linear
 node,way   historic     text         polygon
 way        horse        text         linear
-node,way   industrial   text         polygon
 node,way   junction     text         linear
 node,way   landuse      text         polygon
 node,way   layer        int4         linear
@@ -35,9 +33,6 @@ node,way   lock         text         linear
 node,way   man_made     text         polygon
 node,way   military     text         polygon
 node,way   name         text         linear
-node,way   name:de      text         linear
-node,way   name:fr      text         linear
-node,way   name:nl      text         linear
 node,way   natural      text         polygon
 node,way   oneway       text         linear
 node,way   place        text         polygon
