@@ -33,32 +33,6 @@ sources:
         - water-polygons-split-3857/water_polygons.prj
         - water-polygons-split-3857/water_polygons.shp
         - water-polygons-split-3857/water_polygons.shx
-  icesheet_polygons:
-    type: shp
-    url: https://osmdata.openstreetmap.de/download/antarctica-icesheet-polygons-3857.zip
-    file: antarctica-icesheet-polygons-3857/icesheet_polygons.shp
-    archive:
-      format: zip
-      files:
-        - antarctica-icesheet-polygons-3857/icesheet_polygons.cpg
-        - antarctica-icesheet-polygons-3857/icesheet_polygons.dbf
-        - antarctica-icesheet-polygons-3857/icesheet_polygons.prj
-        - antarctica-icesheet-polygons-3857/icesheet_polygons.shp
-        - antarctica-icesheet-polygons-3857/icesheet_polygons.shx
-  icesheet_outlines:
-    type: shp
-    url: https://osmdata.openstreetmap.de/download/antarctica-icesheet-outlines-3857.zip
-    file: antarctica-icesheet-outlines-3857/icesheet_outlines.shp
-    ogropts:
-      - "-explodecollections"
-    archive:
-      format: zip
-      files:
-        - antarctica-icesheet-outlines-3857/icesheet_outlines.cpg
-        - antarctica-icesheet-outlines-3857/icesheet_outlines.dbf
-        - antarctica-icesheet-outlines-3857/icesheet_outlines.prj
-        - antarctica-icesheet-outlines-3857/icesheet_outlines.shp
-        - antarctica-icesheet-outlines-3857/icesheet_outlines.shx
 
   ne_110m_admin_0_boundary_lines_land:
     type: shp
