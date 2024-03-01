@@ -281,19 +281,6 @@ Layer:
     properties:
       cache-features: true
       minzoom: 9
-  - id: icesheet-outlines
-    geometry: linestring
-    <<: *extents
-    Datasource:
-      <<: *osm2pgsql
-      table: |-
-        (SELECT
-            way,
-            ice_edge
-          FROM icesheet_outlines
-        ) AS icesheet_outlines
-    properties:
-      minzoom: 5
   - id: marinas-area
     geometry: polygon
     <<: *extents
