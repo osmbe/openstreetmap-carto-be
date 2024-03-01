@@ -21,10 +21,12 @@ node,way   boundary     text         linear
 node,way   building     text         polygon
 way        construction text         linear
 way        covered      text         linear
+node,way   craft        text         polygon
 way        foot         text         linear
 node,way   highway      text         linear
 node,way   historic     text         polygon
 way        horse        text         linear
+node,way   industrial   text         polygon
 node,way   junction     text         linear
 node,way   landuse      text         polygon
 node,way   layer        int4         linear
