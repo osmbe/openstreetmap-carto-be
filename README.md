@@ -1,3 +1,10 @@
+# Fork from OpenStreetMap Carto for OpenStreetMap Belgium
+
+## What was changed
+
+- a nl and fr version of the map, with a copy of project.mml file and 46 changes of name to name:nl or name:fr, respectively
+- added 2 icons "brewery" and "friture"
+
 # OpenStreetMap Carto
 
 ![screenshot](https://raw.github.com/gravitystorm/openstreetmap-carto/master/preview.png)

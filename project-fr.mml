@@ -1609,6 +1609,7 @@ Layer:
                   END
               END AS score,
               religion,
+              tags->'cuisine' as cuisine,
               tags->'denomination' as denomination,
               tags->'generator:source' as "generator:source",
               CASE
