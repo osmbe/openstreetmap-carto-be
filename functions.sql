@@ -103,3 +103,52 @@ SELECT
 		ELSE CAST(ROUND(LOG(2, 559082264.028 / scale_denominator)) AS integer)
 	END
 $$;
+
+/* Try to shorten a list of entries if the length is more than maxlength characters
+   The list is partitioned using the given separator and shortened if it contains
+   more then two items, by returning the first and last items separated by a ellipsis (U+2026).
+   If the separator argument multiple characters, the shortening attempted if one, but not more,
+   separator types is found. */
+
+CREATE OR REPLACE FUNCTION carto_shorten_list(
+    listtext text,
+    separators text,
+    maxlength integer DEFAULT 10
+  )
+  RETURNS text
+  LANGUAGE plpgsql
+  IMMUTABLE PARALLEL SAFE
+AS $$
+DECLARE
+  found_sep   text;
+  sep         text;
+  parts       text[];
+BEGIN
+  IF listtext IS NULL
+    OR separators IS NULL
+    OR length(listtext) <= maxlength THEN
+      RETURN listtext;
+  END IF;
+
+  -- Find separator types present in the text
+  FOR i IN 1 .. length(separators) LOOP
+    sep := substr(separators, i, 1);
+    IF position(sep IN listtext) > 0 THEN
+      IF found_sep IS NOT NULL THEN
+        -- Multiple separator types found: do not shorten
+        RETURN listtext;
+      END IF;
+      found_sep := sep;
+    END IF;
+  END LOOP;
+
+  IF found_sep IS NOT NULL THEN
+    parts := string_to_array(listtext, found_sep);
+    IF array_length(parts, 1) > 2 THEN
+      RETURN parts[1] || chr(x'2026'::int) || parts[array_length(parts, 1)];
+    END IF;
+  END IF;
+
+  RETURN listtext;
+END;
+$$;
