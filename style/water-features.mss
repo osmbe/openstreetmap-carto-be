@@ -1,6 +1,7 @@
 @breakwater-color: #aaa; /* Also for groyne */
 @dam: #adadad;
-@dam-line: #444444;
+@dam-line: #5e5e5e;
+@dam-line-low-zoom: #787878;
 @weir-line: #aaa;
 @lock-gate: #aaa;
 @lock-gate-line: #aaa;
@@ -8,17 +9,34 @@
 #water-barriers-point, #water-barriers-line, #water-barriers-poly {
   [waterway = 'dam'] {
     #water-barriers-poly[zoom >= 13] {
-      line-width: 2;
-      line-color: @dam-line;
-      line-join: round;
-      line-cap: round;
       polygon-fill: @dam;
+      [zoom >= 14] {
+        line-width: 1;
+        line-color: @dam-line-low-zoom;
+        line-join: round;
+        [zoom >= 15] { line-color: @dam-line; }
+      }
     }
-    #water-barriers-line[zoom >= 13] {
-      line-width: 2;
-      line-color: @dam-line;
+    #water-barriers-line[zoom >= 13][zoom < 15] {
+      line-width: 1.6;
+      line-color: @dam-line-low-zoom;
       line-join: round;
       line-cap: round;
+      [zoom >= 14] { line-width: 2; }
+    }
+    /* Flat line ends so the casing shows only on the long sides,
+       distinguishing linear dams from polygon dams */
+    #water-barriers-line[zoom >= 15] {
+      casing/line-width: 2.6;
+      casing/line-color: @dam-line;
+      casing/line-join: round;
+      line-width: 1;
+      line-color: @dam;
+      line-join: round;
+      [zoom >= 16] {
+        casing/line-width: 4;
+        line-width: 2;
+      }
     }
     #water-barriers-point[zoom >= 17] {
       marker-fill: @dam;
