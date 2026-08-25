@@ -75,6 +75,12 @@
   }
 }
 
+// Ensure that the 4 attachments in the bridges layer are always correctly ordered
+#bridges[feature = null]::halo { line: none; }
+#bridges[feature = null]::casing { line: none; }
+#bridges[feature = null]::bridges_and_tunnels_background { line: none; }
+#bridges[feature = null]::fill { line: none; }
+
 #water-lines::casing {
   // white glow used when water stroke width is less than 3.5 px and only at "mid zoom" (13 - 17)
 
@@ -157,7 +163,7 @@
   }
 }
 
-#water-lines,
+#water-lines::fill,
 #bridges::fill {
   [feature = 'waterway_river'][zoom >= 12] {
     [int_bridge_tunnel = 'tunnel'] {
