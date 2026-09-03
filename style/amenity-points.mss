@@ -43,6 +43,12 @@
 @private-opacity: 0.33;
 
 #amenity-points {
+  [feature = 'craft_brewery'][zoom >= 17],
+  [feature = 'industrial_brewery'][zoom >= 17] {
+    marker-file: url('symbols/amenity/brewery.svg');
+    marker-fill: @amenity-brown;
+    marker-clip: false;
+  }
   [feature = 'tourism_alpine_hut'][zoom >= 13],
   [feature = 'tourism_wilderness_hut'][zoom >= 13],
   [feature = 'amenity_shelter'][zoom >= 16] {
@@ -106,6 +112,9 @@
     }
     [feature = 'amenity_fast_food'][zoom >= 18] {
       marker-file: url('symbols/amenity/fast_food.svg');
+      [cuisine = 'friture'] {
+        marker-file: url('symbols/amenity/friture.svg');
+      }
     }
     [feature = 'amenity_food_court'][zoom >= 17],
     [feature = 'amenity_restaurant'][zoom >= 18] {
@@ -1039,7 +1048,7 @@
     [shop = 'car_repair'][zoom >= 18] {
       marker-file: url('symbols/shop/car_repair.svg');
     }
-	
+
     [shop = 'motorcycle_repair'][zoom >= 18] {
       marker-file: url('symbols/shop/motorcycle_repair.svg');
     }
@@ -1484,8 +1493,8 @@
     [zoom >= 18] {
       [feature = 'amenity_parking'] { marker-file: url('symbols/amenity/parking.svg'); }
       [feature = 'amenity_parking']["parking" = 'street_side'],
-      [feature = 'amenity_parking']["parking" = 'lane'] { 
-        marker-file: url('symbols/amenity/parking_subtle.svg'); 
+      [feature = 'amenity_parking']["parking" = 'lane'] {
+        marker-file: url('symbols/amenity/parking_subtle.svg');
       }
       [feature = 'amenity_bicycle_parking'] { marker-file: url('symbols/amenity/bicycle_parking.svg'); }
       [feature = 'amenity_motorcycle_parking'] { marker-file: url('symbols/amenity/motorcycle_parking.svg'); }
@@ -2067,7 +2076,7 @@
       text-fill: @leisure-green;
       text-face-name: @standard-font;
       text-halo-fill: @standard-halo-fill;
-      [feature = 'leisure_dog_park'] { 
+      [feature = 'leisure_dog_park'] {
         text-halo-radius: @standard-halo-radius * 1.5; /* Extra halo needed to stand out from paw pattern. */
       }
       [int_access = 'restricted'] {
