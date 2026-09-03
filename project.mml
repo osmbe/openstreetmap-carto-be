@@ -156,18 +156,6 @@ Layer:
         ) AS landcover_line
     properties:
       minzoom: 14
-  - id: icesheet-poly
-    geometry: polygon
-    <<: *extents
-    Datasource:
-      <<: *osm2pgsql
-      table: |-
-        (SELECT
-            way
-          FROM icesheet_polygons
-        ) AS icesheet_polygons
-    properties:
-      minzoom: 5
   - id: water-lines-low-zoom
     geometry: linestring
     <<: *extents
@@ -196,11 +184,11 @@ Layer:
           FROM
           (SELECT -- This subselect allows sorting / filtering on the int_bridge_tunnel column
               way,
-              'waterway_' || waterway AS feature, 
+              'waterway_' || waterway AS feature,
               CASE WHEN tags->'intermittent' IN ('yes')
                 OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
                 THEN 'yes' ELSE 'no' END AS int_intermittent,
-              CASE WHEN tunnel IN ('yes', 'culvert') 
+              CASE WHEN tunnel IN ('yes', 'culvert')
                 OR waterway = 'canal' AND tunnel = 'flooded'
                 THEN 'tunnel' ELSE 'no' END AS int_bridge_tunnel,
               COALESCE(layer,0) AS layernotnull
@@ -298,19 +286,6 @@ Layer:
     properties:
       cache-features: true
       minzoom: 9
-  - id: icesheet-outlines
-    geometry: linestring
-    <<: *extents
-    Datasource:
-      <<: *osm2pgsql
-      table: |-
-        (SELECT
-            way,
-            ice_edge
-          FROM icesheet_outlines
-        ) AS icesheet_outlines
-    properties:
-      minzoom: 5
   - id: marinas-area
     geometry: polygon
     <<: *extents
@@ -652,7 +627,7 @@ Layer:
           ORDER BY
             way,
             z_order DESC,
-            CASE WHEN int_surface = 'unpaved' THEN 1 ELSE 0 END 
+            CASE WHEN int_surface = 'unpaved' THEN 1 ELSE 0 END
         ) AS turning_circle_sql
     properties:
       minzoom: 15
@@ -920,7 +895,7 @@ Layer:
               WHERE bridge IN ('yes', 'boardwalk', 'cantilever', 'covered', 'low_water_crossing', 'movable', 'trestle', 'viaduct')
                 AND railway IS NOT NULL -- end of rail select
             UNION ALL
-            SELECT          
+            SELECT
                 way,
                 'waterway_' || waterway AS feature,
                 NULL AS tracktype,
@@ -1670,7 +1645,7 @@ Layer:
               ) AS feature,
               CASE WHEN access IN ('private', 'no', 'customers', 'permit', 'delivery') THEN 'restricted' ELSE 'yes' END AS int_access,
               CASE
-                WHEN "natural" IN ('peak', 'volcano', 'saddle') 
+                WHEN "natural" IN ('peak', 'volcano', 'saddle')
                      OR tags->'mountain_pass' = 'yes' THEN
                   CASE
                     WHEN tags->'ele' ~ '^-?\d{1,4}(\.\d+)?$' THEN (tags->'ele')::NUMERIC
@@ -2213,7 +2188,7 @@ Layer:
             carto_shorten_list("addr:housenumber", ',;') AS addr_housenumber,
             "addr:housename" AS addr_housename,
             tags->'addr:unit' AS addr_unit,
-            carto_shorten_list(tags->'addr:flats', ';') AS addr_flats, 
+            carto_shorten_list(tags->'addr:flats', ';') AS addr_flats,
             way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels
           FROM planet_osm_polygon
           WHERE way && !bbox! -- Not ST_PointOnSurface(way) because name might be NULL
@@ -2251,7 +2226,7 @@ Layer:
             CASE WHEN tags->'intermittent' IN ('yes')
               OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
               THEN 'yes' ELSE 'no' END AS int_intermittent,
-            CASE WHEN tunnel IN ('yes', 'culvert') 
+            CASE WHEN tunnel IN ('yes', 'culvert')
               OR waterway = 'canal' AND tunnel = 'flooded'
               THEN 'yes' ELSE 'no' END AS int_tunnel
           FROM planet_osm_line
